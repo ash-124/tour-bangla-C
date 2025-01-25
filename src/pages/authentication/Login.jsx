@@ -57,19 +57,26 @@ const Login = () => {
     const handleGoogleLogin = () => {
 
         googleLogin()
-        .then(res => {
-            if (res.user) {
-                console.log(res.data)
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'User created successfully.',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate('/');
-            }
-        })
+            .then(async res => {
+                if (res.user) {
+                    const userInfo = {
+                        name: res.user.displayName,
+                        email: res.user.email,
+                        photoURL: res.user.photoURL
+                    }
+                    const { data } = await axiosPublic.post("/users", userInfo)
+
+                    console.log(data);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'User created successfully.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    navigate(from, { replace: true });
+                }
+            })
 
 
     }
