@@ -25,7 +25,7 @@ const Navbar = () => {
             </li>
         </>
     return (
-        <div className="navbar bg-base-100">
+        <div className="navbar fixed  bg-black/50 text-white justify-evenly items-center">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -54,8 +54,6 @@ const Navbar = () => {
                 <ul className="menu menu-horizontal px-1">
                     {links}
                 </ul>
-            </div>
-            <div className="navbar-end">
                 {
                     user ? <>
                         {/* <span>{user?.displayName}</span> */}
@@ -85,7 +83,9 @@ const Navbar = () => {
                         <li><Link className='btn' to="/login">Login</Link></li>
                     </>
                 }
+
             </div>
+            
         </div>
     );
 };
