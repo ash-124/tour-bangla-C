@@ -1,11 +1,11 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-
-import useAxiosPublic from "../../hooks/useAxiosPublic";
-import useAuth from "../../hooks/useAuth";
 import { FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 
 
@@ -22,18 +22,28 @@ const SignUp = () => {
                 const loggedUser = result.user;
                 console.log(loggedUser);
                 updateUserProfile(data.name, data.photoURL)
-                    .then(data => {
-
-                        console.log("from signup", data)
-                        reset();
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'User created successfully.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                        navigate('/');
+                    .then( async() => {
+                        const userInfo={
+                            name:data.name,
+                            email:data.email,
+                            photoURL:data.photoURL
+                        }
+                        await axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                console.log(res)
+                                if (res.data?.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'User created successfully.',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate(from, { replace: true });
+                                }
+                            })
+                        
 
                     })
                     .catch(error => console.log(error))
@@ -43,44 +53,16 @@ const SignUp = () => {
     const handleGoogleLogin = () => {
         try {
             googleLogin()
-                .then(res => {
+                .then(async res => {
 
                     console.log("user from google", res.user)
                     const userInfo = {
                         name: res.user?.displayName,
-                        email: res.user?.email
+                        email: res.user?.email,
+                        photoURL:res.user?.photoURL
                     }
-                    console.log(userInfo)
-                    navigate('/')
-                    // axiosPublic.post('/users', userInfo)
 
-                    //     .then(res => {
-                    //         if (res.data?.insertedId) {
-                    //             reset();
-                    //             Swal.fire({
-                    //                 position: 'top-end',
-                    //                 icon: 'success',
-                    //                 title: 'User created successfully.',
-                    //                 showConfirmButton: false,
-                    //                 timer: 1500
-                    //             });
-                    //             navigate('/');
-                    //         }
-                    //     })
-                })
-
-
-        } catch (error) {
-            googleLogin()
-                .then(res => {
-
-                    console.log("user from google", res.user)
-                    const userInfo = {
-                        name: res.user?.displayName,
-                        email: res.user?.email
-                    }
-                    console.log(userInfo)
-                    axiosPublic.post('/users', userInfo)
+                    await axiosPublic.post('/users', userInfo)
 
                         .then(res => {
                             if (res.data?.insertedId) {
@@ -96,10 +78,11 @@ const SignUp = () => {
                             }
                         })
                 })
-                .catch(err => {
-                    console.log(" error from google sign in ", err)
 
-                })
+
+        } catch (error) {
+            console.log(error);
+            toast.error(error.message)
         }
     }
 
