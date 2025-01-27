@@ -3,6 +3,7 @@ import App from "../App";
 import Login from "../pages/authentication/Login";
 import SignUp from "../pages/authentication/SignUp";
 import Home from "../pages/Home/Home";
+import PackageDetails from "../pages/Home/tourismGuideSection/PackageDetails";
 
 export const router =createBrowserRouter([
     {
@@ -12,6 +13,10 @@ export const router =createBrowserRouter([
             {
                 path:'/',
                 element:<Home/>
+            },
+            {
+                path:'/package/:id',
+                element:<PackageDetails/>
             },
             {
                 path:'login',

@@ -25,7 +25,7 @@ const Navbar = () => {
             </li>
         </>
     return (
-        <div className="navbar fixed z-50 bg-blue-950/50 text-white justify-evenly items-center">
+        <div className="navbar fixed z-50  bg-blue-950/50 text-white justify-evenly items-center">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -56,8 +56,6 @@ const Navbar = () => {
                 </ul>
                 {
                     user ? <>
-                        {/* <span>{user?.displayName}</span> */}
-                        <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button>
                         <div className="dropdown dropdown-end">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
@@ -76,7 +74,7 @@ const Navbar = () => {
                                     </a>
                                 </li>
                                 <li><a>Settings</a></li>
-                                <li><a>Logout</a></li>
+                                <li> <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button></li>
                             </ul>
                         </div>
                     </> : <>
