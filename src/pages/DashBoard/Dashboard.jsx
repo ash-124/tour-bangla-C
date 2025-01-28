@@ -2,10 +2,12 @@ import { FaAd, FaBook, FaCalendar, FaHome, FaList, FaSearch, FaShoppingCart, FaU
 import { NavLink, Outlet } from "react-router-dom";
 // import useCart from "../hooks/useCart";
 import useRole from "../../Hooks/useRole";
+import useAuth from "../../Hooks/useAuth";
 
 
 const Dashboard = () => {
     // const [cart] = useCart();
+    const {user} = useAuth();
     const { isAdmin, isTourist, isTourGuide } = useRole();
 
     return (
@@ -55,7 +57,7 @@ const Dashboard = () => {
                         isTourist &&
                         <>
                             <li>
-                                <NavLink to="/dashboard/profile">
+                                <NavLink to={`/dashboard/profile/${user?.email}`}>
                                     <FaHome></FaHome>
                                     Manage profile</NavLink>
                             </li>

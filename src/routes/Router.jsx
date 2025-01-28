@@ -5,6 +5,7 @@ import SignUp from "../pages/authentication/SignUp";
 import Home from "../pages/Home/Home";
 import PackageDetails from "../pages/Home/tourismGuideSection/PackageDetails";
 import Dashboard from "../pages/DashBoard/Dashboard";
+import Profile from "../pages/DashBoard/Profile";
 
 export const router =createBrowserRouter([
     {
@@ -31,6 +32,13 @@ export const router =createBrowserRouter([
     },
     {
         path:'/dashboard',
-        element:<Dashboard/>
+        element:<Dashboard/>,
+        children:[
+            {
+                index:true,
+                path:'profile/:email',
+                element:<Profile/>
+            }
+        ]
     }
 ])
