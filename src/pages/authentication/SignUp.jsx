@@ -19,14 +19,13 @@ const SignUp = () => {
     const onSubmit = data => {
         createUser(data.email, data.password)
             .then(result => {
-                const loggedUser = result.user;
-                console.log(loggedUser);
                 updateUserProfile(data.name, data.photoURL)
-                    .then( async() => {
-                        const userInfo={
-                            name:data.name,
-                            email:data.email,
-                            photoURL:data.photoURL
+                    .then(async () => {
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email,
+                            photoURL: data.photoURL,
+                            role:'tourist'
                         }
                         await axiosPublic.post('/users', userInfo)
                             .then(res => {
@@ -43,7 +42,7 @@ const SignUp = () => {
                                     navigate(from, { replace: true });
                                 }
                             })
-                        
+
 
                     })
                     .catch(error => console.log(error))
@@ -59,7 +58,8 @@ const SignUp = () => {
                     const userInfo = {
                         name: res.user?.displayName,
                         email: res.user?.email,
-                        photoURL:res.user?.photoURL
+                        photoURL: res.user?.photoURL,
+                        role:'tourist',
                     }
 
                     await axiosPublic.post('/users', userInfo)

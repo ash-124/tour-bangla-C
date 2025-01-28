@@ -18,7 +18,7 @@ const Navbar = () => {
                 <NavLink to={'/'}> item 3</NavLink>
             </li>
             <li>
-                <NavLink to={'/go'} > item 3</NavLink>
+                <NavLink to={'/dashboard'} > Dashboard</NavLink>
             </li>
             <li>
                 <NavLink to={'where'}> item 3</NavLink>

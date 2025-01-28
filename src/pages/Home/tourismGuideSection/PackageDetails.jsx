@@ -22,7 +22,7 @@ const PackageDetails = () => {
     })
     console.log(packageData);
     const handleBooking = () => {
-        if (!tourDate ) {
+        if (!tourDate) {
             toast.error("Please select a tour date and guide.");
             return;
         }
@@ -46,7 +46,7 @@ const PackageDetails = () => {
                 <h2 className="text-2xl font-bold mb-4">Gallery</h2>
                 <div className="grid grid-cols-3 gap-4 min-h-screen">
                     {packageData?.images?.map((img, index) => (
-                        <div  key={index}>
+                        <div key={index}>
                             <ModalImage
                                 small={img} // The thumbnail image
                                 large={img} // The large image to show in the modal
@@ -72,7 +72,7 @@ const PackageDetails = () => {
                     {packageData.itinerary && packageData?.itinerary.map((item, index) => (
                         <li key={index} className="mb-2">
                             <strong> {item} </strong>
-                            
+
                         </li>
                     ))}
                 </ul>
