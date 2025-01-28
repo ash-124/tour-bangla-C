@@ -6,16 +6,15 @@ import useRole from "../../Hooks/useRole";
 
 const Dashboard = () => {
     // const [cart] = useCart();
-    const isAdmin = true;
-    const role = useRole();
-    console.log(role);
+    const { isAdmin, isTourist, isTourGuide } = useRole();
+
     return (
         <div className="flex">
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-orange-400">
                 <ul className="menu p-4">
                     {/* isAdmin condition */}
-                    {isAdmin ?
+                    {isAdmin &&
                         <>
                             <li>
                                 <NavLink to="/dashboard/adminHome">
@@ -43,33 +42,46 @@ const Dashboard = () => {
                                     <FaUsers />
                                     All users</NavLink>
                             </li>
-                        </> : <>
+                        </>}
+                    {
+                        // tourist tabs
+                        // --------------
+                        //  
+                        // 
+                        // 
+                        // 
+                        // 
+                        // ------------------
+                        isTourist &&
+                        <>
                             <li>
-                                <NavLink to="/dashboard/userHome">
+                                <NavLink to="/dashboard/profile">
                                     <FaHome></FaHome>
-                                    User Home</NavLink>
+                                    Manage profile</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/reservation">
+                                <NavLink to="/dashboard/my-bookings">
                                     <FaCalendar></FaCalendar>
-                                    Reservation</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/cart">
-                                    <FaShoppingCart></FaShoppingCart>
-                                    My Cart ({cart.length})</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/review">
-                                    <FaAd></FaAd>
-                                    Add a Review</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/bookings">
-                                    <FaList></FaList>
                                     My Bookings</NavLink>
                             </li>
-                        </>}
+                            <li>
+                                <NavLink to="/dashboard/manage-stories">
+                                    <FaShoppingCart></FaShoppingCart>
+                                    Manage Stories</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/add-stories">
+                                    <FaAd></FaAd>
+                                    Add Stories</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/join-tour-guide">
+                                    <FaList></FaList>
+                                    Join as tour guide</NavLink>
+                            </li>
+                        </>
+                    }
+
                     <div className="divider"></div>
                     <li>
                         <NavLink to="/">
@@ -77,9 +89,9 @@ const Dashboard = () => {
                             Home</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/order/salad">
+                        <NavLink to="/packages">
                             <FaSearch></FaSearch>
-                            Menu</NavLink>
+                            Packages</NavLink>
                     </li>
                 </ul>
             </div>
