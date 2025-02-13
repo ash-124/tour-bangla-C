@@ -7,8 +7,8 @@ import useAuth from "../../Hooks/useAuth";
 
 const Dashboard = () => {
     // const [cart] = useCart();
-    const {user} = useAuth();
-    const { isAdmin, isTourist, isTourGuide } = useRole();
+    const { user } = useAuth();
+    const { isTourist, isAdmin, isTourGuide } = useRole();
 
     return (
         <div className="flex">
@@ -46,42 +46,37 @@ const Dashboard = () => {
                             </li>
                         </>}
                     {
-                        // tourist tabs
-                        // --------------
-                        //  
-                        // 
-                        // 
-                        // 
-                        // 
-                        // ------------------
-                        isTourist &&
-                        <>
-                            <li>
-                                <NavLink to={`/dashboard/profile/${user?.email}`}>
-                                    <FaHome></FaHome>
-                                    Manage profile</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/my-bookings">
-                                    <FaCalendar></FaCalendar>
-                                    My Bookings</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/manage-stories">
-                                    <FaShoppingCart></FaShoppingCart>
-                                    Manage Stories</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/add-stories">
-                                    <FaAd></FaAd>
-                                    Add Stories</NavLink>
-                            </li>
-                            <li>
-                                <NavLink to="/dashboard/join-tour-guide">
-                                    <FaList></FaList>
-                                    Join as tour guide</NavLink>
-                            </li>
-                        </>
+                        isTourGuide && <div>tourguide</div>
+                           
+                    }
+                    { 
+                        isTourist &&  <>
+                        <li>
+                            <NavLink to='/dashboard/profile'>
+                                <FaHome></FaHome>
+                                Manage profile</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/my-bookings">
+                                <FaCalendar></FaCalendar>
+                                My Bookings</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/manage-stories">
+                                <FaShoppingCart></FaShoppingCart>
+                                Manage Stories</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/add-stories">
+                                <FaAd></FaAd>
+                                Add Stories</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/dashboard/join-tour-guide">
+                                <FaList></FaList>
+                                Join as tour guide</NavLink>
+                        </li>
+                    </>
                     }
 
                     <div className="divider"></div>

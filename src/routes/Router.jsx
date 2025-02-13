@@ -6,6 +6,10 @@ import Home from "../pages/Home/Home";
 import PackageDetails from "../pages/Home/tourismGuideSection/PackageDetails";
 import Dashboard from "../pages/DashBoard/Dashboard";
 import Profile from "../pages/DashBoard/Profile";
+import Packages from "../pages/Packages";
+import ApplyAsGuide from "../pages/DashBoard/ApplyAsGuide";
+import GuideProfile from "../pages/tourGuidesProfile/GuideProfile";
+import MyBookings from "../pages/myBookingPage/MyBookings";
 
 export const router =createBrowserRouter([
     {
@@ -15,6 +19,10 @@ export const router =createBrowserRouter([
             {
                 path:'/',
                 element:<Home/>
+            },
+            {
+                path:'packages',
+                element:<Packages/>
             },
             {
                 path:'/package/:id',
@@ -27,6 +35,10 @@ export const router =createBrowserRouter([
             {
                 path:'signup',
                 element:<SignUp/>
+            },
+            {
+                path:'/guide-profile/:email',
+                element:<GuideProfile/>
             }
         ]
     },
@@ -35,9 +47,17 @@ export const router =createBrowserRouter([
         element:<Dashboard/>,
         children:[
             {
-                index:true,
-                path:'profile/:email',
+                path:'profile',
                 element:<Profile/>
+            },
+            {
+                path:'join-tour-guide',
+                element:<ApplyAsGuide/>
+
+            },
+            {
+                path:'my-bookings',
+                element:<MyBookings/>
             }
         ]
     }

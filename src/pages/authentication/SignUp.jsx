@@ -39,7 +39,7 @@ const SignUp = () => {
                                         showConfirmButton: false,
                                         timer: 1500
                                     });
-                                    navigate(from, { replace: true });
+                                    navigate('/');
                                 }
                             })
 
@@ -54,7 +54,6 @@ const SignUp = () => {
             googleLogin()
                 .then(async res => {
 
-                    console.log("user from google", res.user)
                     const userInfo = {
                         name: res.user?.displayName,
                         email: res.user?.email,

@@ -16,22 +16,20 @@ const Login = () => {
     const location = useLocation();
 
     const from = location.state?.from?.pathname || "/";
-    console.log('state in the location login page', location.state)
 
     useEffect(() => {
         loadCaptchaEnginge(6);
     }, [])
+
 
     const handleLogin = event => {
         event.preventDefault();
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        console.log(email, password);
         signIn(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 Swal.fire({
                     title: 'User Login Successful.',
                     showClass: {
@@ -42,6 +40,13 @@ const Login = () => {
                     }
                 });
                 navigate(from, { replace: true });
+            })
+            .catch(error=>{
+                    console.log(err);
+                    if(err?.response?.status === 409){
+                        navigate(from , {replace: true})
+                    }
+
             })
     }
 
@@ -63,11 +68,10 @@ const Login = () => {
                         name: res.user.displayName,
                         email: res.user.email,
                         photoURL: res.user.photoURL,
-                        role:'tourist',
+                        role: 'tourist',
                     }
                     const { data } = await axiosPublic.post("/users", userInfo)
 
-                    console.log(data);
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -77,6 +81,14 @@ const Login = () => {
                     });
                     navigate(from, { replace: true });
                 }
+            })
+            .catch(err =>{
+                console.log(err);
+                if(err?.response?.status === 409){
+                    navigate(from , {replace: true})
+                }
+
+
             })
 
 

@@ -1,11 +1,10 @@
-import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { AuthContext } from '../Provider/AuthProvider';
+import useAuth from '../Hooks/useAuth';
 
 
 
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useAuth()
 
     const handleLogOut = () => {
         logOut()
@@ -15,13 +14,17 @@ const Navbar = () => {
     const links =
         <>
             <li>
-                <NavLink to={'/'}> item 3</NavLink>
+                <NavLink to={'/'}>Home</NavLink>
+            </li>
+
+            <li>
+                <NavLink to={'/community'}>Community</NavLink>
             </li>
             <li>
-                <NavLink to={'/dashboard'} > Dashboard</NavLink>
+                <NavLink to={'/about-us'}>About us</NavLink>
             </li>
             <li>
-                <NavLink to={'where'}> item 3</NavLink>
+                <NavLink to={'/trips'}>trips</NavLink>
             </li>
         </>
     return (
@@ -48,7 +51,8 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">Tour Bangla</a>
+                <Link to={'/'} className="btn btn-ghost text-xl">Tour Bangla</Link>
+                <span><img className='w-10' src="https://i.pinimg.com/474x/bc/8e/76/bc8e764bece45d88dfb31c6fcabca83a.jpg" alt="" /></span>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -68,10 +72,15 @@ const Navbar = () => {
                                 tabIndex={0}
                                 className="menu menu-sm dropdown-content bg-slate-600 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                                 <li>
-                                    <a className="justify-between">
+                                    <NavLink to={'/dashboard'} > Dashboard</NavLink>
+                                </li>
+                                <li>
+                                    <Link
+                                        to='/dashboard/profile'
+                                        className="justify-between">
                                         Profile
-                                        <span className="badge">New</span>
-                                    </a>
+
+                                    </Link>
                                 </li>
                                 <li><a>Settings</a></li>
                                 <li> <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button></li>

@@ -2,6 +2,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Package from './Package';
 import GuideSection from './GuideSection';
+import { Link } from 'react-router-dom';
 const TourismContainer = () => {
     return (
         <div className='my-20'>
@@ -11,10 +12,11 @@ const TourismContainer = () => {
                     <Tab>Meet Our Tour Guides</Tab>
                 </TabList>
                 <TabPanel>
-                    <Package/>
+                    <Package />
+                    <Link to={'/packages'}><div className=' w-full btn text-center'> See all Packages</div></Link>
                 </TabPanel>
                 <TabPanel>
-                    <GuideSection/>
+                    <GuideSection />
                 </TabPanel>
             </Tabs>
         </div>

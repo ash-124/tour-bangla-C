@@ -1,18 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
 import ModalImage from 'react-modal-image';
 import toast from 'react-hot-toast';
 import DatePicker from 'react-datepicker';
-
+import useTourGuide from '../../../Hooks/useTourGuide';
 const PackageDetails = () => {
     const axiosPublic = useAxiosPublic();
     const { id } = useParams();
     const { user } = useAuth();
-    const [tourDate, setTourDate] = useState(null);
-    console.log('id from details page', id)
+    const [tourGuides, isLoading, error] = useTourGuide();
+    const [tourDate, setTourDate] = useState(new Date());
+    const [selectedGuide, setSelectedGuide] = useState("");
+    const navigate = useNavigate();
     const { data: packageData = {} } = useQuery({
         queryKey: ['singlePackage'],
         queryFn: async () => {
@@ -21,8 +23,8 @@ const PackageDetails = () => {
         }
     })
     console.log(packageData);
-    const handleBooking = () => {
-        if (!tourDate) {
+    const handleBooking = async() => {
+        if (!tourDate || !selectedGuide) {
             toast.error("Please select a tour date and guide.");
             return;
         }
@@ -33,17 +35,26 @@ const PackageDetails = () => {
             packageName: packageData.name,
             price: packageData.price,
             tourDate,
-            // guideName: selectedGuide,
+            guideName: selectedGuide,
             status: "pending",
         };
-        console.log(bookingData)
+        try {
+            const { data } = await axiosPublic.post('/booking', bookingData);
+            if (data?.insertedId) {
+                toast.success(`The tour package ${packageData?.name} booked successfully`)
+            }
+            navigate('/dashboard/my-bookings')
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.message);
+        }
+
     }
     return (
 
         <div className="container mx-auto p-4 mt-16">
             {/* Gallery Section */}
             <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">Gallery</h2>
                 <div className="grid grid-cols-3 gap-4 min-h-screen">
                     {packageData?.images?.map((img, index) => (
                         <div key={index}>
@@ -79,25 +90,25 @@ const PackageDetails = () => {
             </div>
 
             {/* Tour Guides Section */}
-            {/* <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Tour Guides</h2>
-        <div className="grid grid-cols-3 gap-4">
-          {guides.map((guide) => (
-            <div
-              key={guide._id}
-              className="cursor-pointer border p-4 rounded-lg text-center"
-              onClick={() => navigate(`/guide/${guide._id}`)}
-            >
-              <img
-                src={guide.image}
-                alt={guide.name}
-                className="w-20 h-20 mx-auto rounded-full mb-2"
-              />
-              <p>{guide.name}</p>
+            <div className="mb-8">
+                <h2 className="text-2xl font-bold mb-4">Tour Guides</h2>
+                <div className="grid grid-cols-3 gap-4">
+                    {tourGuides?.map((guide) => (
+                        <div
+                            key={guide._id}
+                            className="cursor-pointer border p-4 rounded-lg text-center"
+                            onClick={() => navigate(`/guide-profile/${guide.email}`)}
+                        >
+                            <img
+                                src={guide.photoURL}
+                                alt={guide.name}
+                                className="w-20 h-20 mx-auto rounded-full mb-2"
+                            />
+                            <p>{guide.name}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
-          ))}
-        </div>
-      </div> */}
 
             {/* Booking Form */}
             <div className="mb-8">
@@ -139,8 +150,8 @@ const PackageDetails = () => {
                         placeholderText="Select Tour Date"
                         className="p-2 border rounded-lg w-full"
                     />
-                    {/* TO:DO make guides */}
-                    {/* <select
+
+                    <select
                         value={selectedGuide}
                         onChange={(e) => setSelectedGuide(e.target.value)}
                         className="p-2 border rounded-lg"
@@ -148,12 +159,12 @@ const PackageDetails = () => {
                         <option value="" disabled>
                             Select Tour Guide
                         </option>
-                        {guides.map((guide) => (
+                        {tourGuides?.map((guide) => (
                             <option key={guide._id} value={guide.name}>
                                 {guide.name}
                             </option>
                         ))}
-                    </select> */}
+                    </select>
                     <button
                         type="button"
                         onClick={handleBooking}

@@ -1,15 +1,14 @@
-import React from 'react';
-import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
-import SinglePackage from '../../singlePackage/SinglePackage';
+import useAxiosPublic from '../Hooks/useAxiosPublic';
+import SinglePackage from './singlePackage/SinglePackage';
 
-const Package = () => {
+const Packages = () => {
     const axiosPublic = useAxiosPublic();
-    
+
     const { data: packages = [], isLoading, isError } = useQuery({
         queryKey: ['packages'],
         queryFn: async () => {
-            const { data } = await axiosPublic.get('/packages/?random=true');
+            const { data } = await axiosPublic.get('/packages');
             return data;
         }
     })
@@ -22,12 +21,13 @@ const Package = () => {
         return <div>Loading packages...</div>;
     }
     console.log("package data's", packages)
+
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-            {packages.map(pkg => <SinglePackage key={pkg._id} pkg={pkg}/> )}
-           
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-16 gap-6 p-4">
+            {packages.map(pkg => <SinglePackage key={pkg._id} pkg={pkg} />)}
+
         </div>
     );
 };
 
-export default Package;
+export default Packages;

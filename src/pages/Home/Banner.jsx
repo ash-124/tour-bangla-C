@@ -12,7 +12,6 @@ const Banner = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle the form submission
-    console.log("Form Data:", formData);
     // Add your logic to process the form data here
   };
 
