@@ -7,7 +7,7 @@ import BookingRow from './BookingRow';
 const MyBookings = () => {
     const { user } = useAuth();
     const axiosPublic = useAxiosPublic();
-    const { data: bookedPackages = [], isLoading } = useQuery({
+    const { data: bookedPackages = [], isLoading, refetch } = useQuery({
         queryKey: [user?.email, 'booked-packages'],
         queryFn: async () => {
             const { data } = await axiosPublic.get(`/bookedPackages/?email=${user?.email}`);
@@ -41,8 +41,8 @@ const MyBookings = () => {
                 <tbody>
                     {/* row 1 */}
                     {
-                        bookedPackages.map((pkg, idx) =>
-                             <BookingRow key={pkg._id} pkg ={pkg} i ={idx}  />
+                      bookedPackages && bookedPackages.map((pkg, idx) =>
+                             <BookingRow refetch={refetch} key={pkg._id} pkg ={pkg} i ={idx}  />
                         )
                     }
 
