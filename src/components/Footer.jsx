@@ -18,7 +18,7 @@ const Footer = () => {
             </div>
             <div className="p-4 footer-center bg-base-300 text-base-content">
                 <div>
-                    <p>Copyright © 2023 - All right reserved by Tour Bangla</p>
+                    <p>Copyright © {new Date().getFullYear()} - All right reserved by Tour Bangla</p>
                 </div>
             </div>
         </footer>

@@ -2,6 +2,7 @@ import React from 'react';
 import useAuth from '../../Hooks/useAuth';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
+import BookingRow from './BookingRow';
 
 const MyBookings = () => {
     const { user } = useAuth();
@@ -14,7 +15,7 @@ const MyBookings = () => {
         }
     })
     console.log(bookedPackages)
-    if(isLoading){
+    if (isLoading) {
         return (
             <div className='flex items-center justify-center p-10'>
                 <span className="loading loading-bars loading-lg"></span>
@@ -23,8 +24,30 @@ const MyBookings = () => {
         )
     }
     return (
-        <div>
-            my Bookings: {bookedPackages?.length}
+        <div className="overflow-x-auto">
+            <table className="table">
+                {/* head */}
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th> Package</th>
+                        <th>Guide</th>
+                        <th>Date</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {/* row 1 */}
+                    {
+                        bookedPackages.map((pkg, idx) =>
+                             <BookingRow key={pkg._id} pkg ={pkg} i ={idx}  />
+                        )
+                    }
+
+                </tbody>
+            </table>
         </div>
     );
 };
