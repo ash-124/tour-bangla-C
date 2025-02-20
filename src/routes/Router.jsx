@@ -10,6 +10,9 @@ import Packages from "../pages/Packages";
 import ApplyAsGuide from "../pages/DashBoard/ApplyAsGuide";
 import GuideProfile from "../pages/tourGuidesProfile/GuideProfile";
 import MyBookings from "../pages/myBookingPage/MyBookings";
+import ManageUsers from "../pages/DashBoard/Admin/ManageUsers";
+import ManageCandidates from "../pages/DashBoard/Admin/ManageCandidates";
+import AddPackage from "../pages/DashBoard/Admin/AddPackage";
 
 export const router =createBrowserRouter([
     {
@@ -43,7 +46,7 @@ export const router =createBrowserRouter([
         ]
     },
     {
-        path:'/dashboard',
+        path:'dashboard',
         element:<Dashboard/>,
         children:[
             {
@@ -58,7 +61,23 @@ export const router =createBrowserRouter([
             {
                 path:'my-bookings',
                 element:<MyBookings/>
+            },
+            // admin routes
+            // TO:DO make a admin profile component 
+            {
+                path:'users',
+                element:<ManageUsers/>
+
+            },
+            {
+                path:'candidates',
+                element:<ManageCandidates/>
+            }, 
+            {
+                path:'add-package',
+                element:<AddPackage/>
             }
+            
         ]
     }
 ])

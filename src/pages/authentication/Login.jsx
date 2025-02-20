@@ -6,6 +6,7 @@ import Swal from 'sweetalert2'
 import { FaGoogle } from 'react-icons/fa';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useAuth from '../../Hooks/useAuth';
+import toast from 'react-hot-toast';
 
 
 const Login = () => {
@@ -42,7 +43,8 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .catch(error=>{
-                    console.log(err);
+                    console.log(error);
+                    toast.error(error.message)
                     if(err?.response?.status === 409){
                         navigate(from , {replace: true})
                     }

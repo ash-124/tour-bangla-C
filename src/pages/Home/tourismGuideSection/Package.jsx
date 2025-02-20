@@ -5,7 +5,7 @@ import SinglePackage from '../../singlePackage/SinglePackage';
 
 const Package = () => {
     const axiosPublic = useAxiosPublic();
-    
+
     const { data: packages = [], isLoading, isError } = useQuery({
         queryKey: ['packages'],
         queryFn: async () => {
@@ -24,8 +24,8 @@ const Package = () => {
     console.log("package data's", packages)
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-            {packages.map(pkg => <SinglePackage key={pkg._id} pkg={pkg}/> )}
-           
+            {packages.map(pkg => <SinglePackage key={pkg._id} pkg={pkg} />)}
+
         </div>
     );
 };

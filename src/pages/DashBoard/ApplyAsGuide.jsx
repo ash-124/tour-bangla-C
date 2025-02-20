@@ -19,6 +19,7 @@ const ApplyAsGuide = () => {
       const { data } = await axiosPublic.post('/application/tour-guide', applicationData);
       if (data?.insertedId) {
         setIsSubmitted(true);
+        e.target.reset();
       }
       console.log(data);
     } catch (error) {
