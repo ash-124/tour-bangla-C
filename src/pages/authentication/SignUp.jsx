@@ -45,7 +45,9 @@ const SignUp = () => {
 
 
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => {
+                        toast.error(error.message)
+                    })
             })
     };
 
@@ -75,6 +77,9 @@ const SignUp = () => {
                                 });
                                 navigate('/');
                             }
+                        }).catch(err=>{
+                            console.log(err);
+                            toast.error(err.message)
                         })
                 })
 

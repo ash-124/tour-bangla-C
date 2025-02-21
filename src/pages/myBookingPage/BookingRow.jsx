@@ -47,7 +47,7 @@ const BookingRow = ({ pkg, i, refetch }) => {
                 <th>{i + 1}</th>
                 <td>{packageName}</td>
                 <td>{guideName}</td>
-                <td>{tourDate}</td>
+                <td>{new Date(tourDate).toLocaleDateString('en-GB')}</td>
                 <td>{price}</td>
                 <td>{status}</td>
                 <td className='flex items-center gap-3'>

@@ -13,7 +13,7 @@ const PackageDetails = () => {
     const { user } = useAuth();
     const [tourGuides, isLoading, error] = useTourGuide();
     const [tourDate, setTourDate] = useState(new Date());
-    const [selectedGuide, setSelectedGuide] = useState("");
+    const [selectedGuide, setSelectedGuide] = useState(null);
     const navigate = useNavigate();
     const { data: packageData = {} } = useQuery({
         queryKey: ['singlePackage'],
@@ -22,8 +22,13 @@ const PackageDetails = () => {
             return data;
         }
     })
-    console.log(packageData);
-    const handleBooking = async() => {
+    const handleSelectedTourGuide = (e) =>{
+        const name = e.target.value;
+        const email = e.target.selectedOptions[0].dataset.email;
+        setSelectedGuide({name, email})
+        console.log({name, email})
+    }
+    const handleBooking = async () => {
         if (!tourDate || !selectedGuide) {
             toast.error("Please select a tour date and guide.");
             return;
@@ -35,7 +40,8 @@ const PackageDetails = () => {
             packageName: packageData.name,
             price: packageData.price,
             tourDate,
-            guideName: selectedGuide,
+            guideName: selectedGuide?.name,
+            guideEmail: selectedGuide?.email,
             status: "pending",
         };
         try {
@@ -50,6 +56,7 @@ const PackageDetails = () => {
         }
 
     }
+    
     return (
 
         <div className="container mx-auto p-4 mt-16">
@@ -152,15 +159,15 @@ const PackageDetails = () => {
                     />
 
                     <select
-                        value={selectedGuide}
-                        onChange={(e) => setSelectedGuide(e.target.value)}
+                        value={selectedGuide?.name || ''}
+                        onChange={handleSelectedTourGuide}
                         className="p-2 border rounded-lg"
                     >
                         <option value="" disabled>
                             Select Tour Guide
                         </option>
                         {tourGuides?.map((guide) => (
-                            <option key={guide._id} value={guide.name}>
+                            <option key={guide._id} data-email={guide?.email} value={guide.name}>
                                 {guide.name}
                             </option>
                         ))}

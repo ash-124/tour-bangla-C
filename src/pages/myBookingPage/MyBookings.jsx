@@ -41,8 +41,8 @@ const MyBookings = () => {
                 <tbody>
                     {/* row 1 */}
                     {
-                      bookedPackages && bookedPackages.map((pkg, idx) =>
-                             <BookingRow refetch={refetch} key={pkg._id} pkg ={pkg} i ={idx}  />
+                        bookedPackages && bookedPackages.map((pkg, idx) =>
+                            <BookingRow refetch={refetch} key={pkg._id} pkg={pkg} i={idx} />
                         )
                     }
 

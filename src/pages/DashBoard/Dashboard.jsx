@@ -15,7 +15,7 @@ const Dashboard = () => {
             if (isTourist) navigate('/dashboard/my-bookings');
             if (isAdmin) navigate('/dashboard/users');
             if(isTourGuide) navigate('/dashboard/profile')
-        }}, [ isTourist, isAdmin, isTourGuide])
+        }}, [ pathname, isTourist, isAdmin, isTourGuide])
         return (
         <div className="flex">
             {/* dashboard side bar */}
