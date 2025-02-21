@@ -1,60 +1,58 @@
 import { FaAd, FaBook, FaCalendar, FaHome, FaList, FaSearch, FaShoppingCart, FaUsers, FaUtensils } from "react-icons/fa";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-// import useCart from "../hooks/useCart";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import useRole from "../../Hooks/useRole";
-import useAuth from "../../Hooks/useAuth";
 import { useEffect } from "react";
 
 
 const Dashboard = () => {
     // const [cart] = useCart();
-    const { user } = useAuth();
     const navigate = useNavigate();
-
+    const {pathname} = useLocation();
     const { isTourist, isAdmin, isTourGuide } = useRole();
-    useEffect(()=>{
-        if(isTourist) navigate('/dashboard/my-bookings');
-        if(isAdmin) navigate('/dashboard/users');
-        // if(isTourGuide) navigate('/dashboard/assigned-tours')
-    }, [])
-console.log({isTourist, isAdmin, isTourGuide })
-    return (
+    
+        useEffect(() => {
+            if(pathname ==='/dashboard'){
+            if (isTourist) navigate('/dashboard/my-bookings');
+            if (isAdmin) navigate('/dashboard/users');
+            if(isTourGuide) navigate('/dashboard/profile')
+        }}, [ isTourist, isAdmin, isTourGuide])
+        return (
         <div className="flex">
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-orange-400">
                 <ul className="menu p-4">
                     {/* isAdmin condition */}
                     {isAdmin &&
-                         <>
-                         <li>
-                             <NavLink to="/dashboard/profile">
-                                 <FaHome></FaHome>
-                                 Admin Profile</NavLink>
-                         </li>
-                         <li>
-                             <NavLink to="/dashboard/add-package">
-                                 <FaUtensils />
-                                 Add Package</NavLink>
-                         </li>
-                         <li>
-                             <NavLink to="/dashboard/users">
-                                 <FaList />
-                                 Manage Users </NavLink>
-                         </li>
-                         <li>
-                             <NavLink to="/dashboard/Candidates">
-                                 <FaBook />
-                                 Manage Candidates</NavLink>
-                         </li>
-                     </>
-                        }
-                    {
-                        isTourGuide && 
                         <>
                             <li>
                                 <NavLink to="/dashboard/profile">
                                     <FaHome></FaHome>
-                                     Profile</NavLink>
+                                    Admin Profile</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/add-package">
+                                    <FaUtensils />
+                                    Add Package</NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/users">
+                                    <FaList />
+                                    Manage Users </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/dashboard/Candidates">
+                                    <FaBook />
+                                    Manage Candidates</NavLink>
+                            </li>
+                        </>
+                    }
+                    {
+                        isTourGuide &&
+                        <>
+                            <li>
+                                <NavLink to="/dashboard/profile">
+                                    <FaHome></FaHome>
+                                    Profile</NavLink>
                             </li>
                             <li>
                                 <NavLink to="/dashboard/add-package">
