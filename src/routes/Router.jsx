@@ -13,6 +13,7 @@ import MyBookings from "../pages/myBookingPage/MyBookings";
 import ManageUsers from "../pages/DashBoard/Admin/ManageUsers";
 import ManageCandidates from "../pages/DashBoard/Admin/ManageCandidates";
 import AddPackage from "../pages/DashBoard/Admin/AddPackage";
+import AssignedTours from "../pages/DashBoard/Tour Guide/AssignedTours";
 
 export const router =createBrowserRouter([
     {
@@ -61,6 +62,12 @@ export const router =createBrowserRouter([
             {
                 path:'my-bookings',
                 element:<MyBookings/>
+            },
+            // Tour Guide routes
+
+            {
+                path:'assigned-tours',
+                element:<AssignedTours/>
             },
             // admin routes
             // TO:DO make a admin profile component 

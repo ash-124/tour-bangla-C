@@ -55,7 +55,7 @@ const Dashboard = () => {
                                     Profile</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/add-package">
+                                <NavLink to="/dashboard/assigned-tours">
                                     <FaUtensils />
                                     My Assigned Tours</NavLink>
                             </li>
