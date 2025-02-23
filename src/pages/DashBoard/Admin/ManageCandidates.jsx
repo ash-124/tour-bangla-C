@@ -71,7 +71,7 @@ const ManageCandidates = () => {
             <div className="flex flex-col text-center items-center justify-center">
                 <h2 className="text-4xl font-semibold my-3">Tour Guide Candidates</h2>
                 <hr className="text-gray-400 p-3" />
-                
+
             </div>
             <div className="overflow-x-auto ">
                 <table className="table flex flex-col items-center justify-center">
