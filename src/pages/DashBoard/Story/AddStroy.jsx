@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
-import { data } from "autoprefixer";
 import toast from "react-hot-toast";
+import useAuth from "../../../Hooks/useAuth";
 
 const imgUploadApiKey = import.meta.env.VITE_imgKey;
 const imgUploadApi = `https://api.imgbb.com/1/upload?key=${imgUploadApiKey} `
@@ -11,6 +11,7 @@ const AddStory = () => {
     const [text, setText] = useState("");
     const [images, setImages] = useState([]);
     const [isUploading, setIsUploading] = useState();
+    const { user } = useAuth();
     const navigate = useNavigate();
     const axiosPublic = useAxiosPublic();
 
@@ -48,7 +49,7 @@ const AddStory = () => {
                     })
                     console.log(data?.success)
                     if (data?.success) {
-                        
+
                         return data?.data?.display_url;
                     } else {
                         return null;
@@ -60,7 +61,7 @@ const AddStory = () => {
                     return null;
                 }
             }))
-            console.log('uploadImages',uploadImages)
+            console.log('uploadImages', uploadImages)
             const validImages = uploadImages.filter(url => url !== null)
             console.log(validImages)
             if (validImages.length === 0) {
@@ -68,23 +69,32 @@ const AddStory = () => {
                 setIsUploading(false);
                 return;
             }
-            // Prepare final form data
-            const formData = {
+            // Prepare final story data
+            const storyData = {
                 title: title,
                 description: text,
                 images: validImages,
+                user: user?.email
             };
-            console.log(formData)
-            if(formData.images){
-                setIsUploading(false)
-            }
+            console.log(storyData)
             
+            if (storyData.images) {
+                const {data} = await axiosPublic.post('/story/upload',storyData)
+                if(data?.insertedId){
+                    setIsUploading(false)
+                    toast.success('Your story uploaded successfully ')
+                    setTitle('');
+                    setText('');
+                    setImages([]);
+                }
+            }
+
         } catch (error) {
             console.log('error on uploading story', error)
             toast.error(error.message);
+            setIsUploading(false)
         }
 
-        // Now you can send formData to your backend if needed
     };
     console.log(isUploading)
 
@@ -136,7 +146,8 @@ const AddStory = () => {
                     ))}
                 </div>
                 <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-                    {isUploading ? 'uploading' : "Submit"}
+                    {isUploading ? <span className="loading loading-spinner text-accent"></span>
+                    : "Submit"}
                 </button>
             </form>
         </div>
