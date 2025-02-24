@@ -7,16 +7,17 @@ import { useEffect } from "react";
 const Dashboard = () => {
     // const [cart] = useCart();
     const navigate = useNavigate();
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
     const { isTourist, isAdmin, isTourGuide } = useRole();
-    
-        useEffect(() => {
-            if(pathname ==='/dashboard'){
+
+    useEffect(() => {
+        if (pathname === '/dashboard') {
             if (isTourist) navigate('/dashboard/my-bookings');
             if (isAdmin) navigate('/dashboard/users');
-            if(isTourGuide) navigate('/dashboard/profile')
-        }}, [ pathname, isTourist, isAdmin, isTourGuide])
-        return (
+            if (isTourGuide) navigate('/dashboard/profile')
+        }
+    }, [pathname, isTourist, isAdmin, isTourGuide])
+    return (
         <div className="flex">
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-orange-400">
@@ -65,7 +66,7 @@ const Dashboard = () => {
                                     Stories </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/Candidates">
+                                <NavLink to="/dashboard/add-story">
                                     <FaBook />
                                     Add Story</NavLink>
                             </li>
@@ -90,7 +91,7 @@ const Dashboard = () => {
                                     Manage Stories</NavLink>
                             </li>
                             <li>
-                                <NavLink to="/dashboard/add-stories">
+                                <NavLink to="/dashboard/add-story">
                                     <FaAd></FaAd>
                                     Add Stories</NavLink>
                             </li>

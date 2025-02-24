@@ -43,6 +43,16 @@ const AssignedTours = () => {
         })
 
     }
+
+    const handleStatus = (status) => {
+        if (status === 'pending') {
+            return "text-yellow-500";
+        } else if (status === 'rejected') {
+            return "text-red-500";
+        } else {
+            return 'text-green-500'
+        }
+    }
     if (isLoading) <span className="loading text-center loading-bars loading-lg"></span>
 
     return (
@@ -73,20 +83,23 @@ const AssignedTours = () => {
                                 <td>{tour.userEmail.split('@')[0]}</td>
                                 <td>{new Date(tour.tourDate).toLocaleDateString('en-GB')}</td>
                                 <td>{tour.price}</td>
-                                <td>{tour.status}</td>
+                                <td className={` ${handleStatus(tour?.status)} uppercase font-semibold`}>{tour.status}</td>
                                 <td>
-                                    <button disabled={tour.status === 'pending'} onClick={() => {
+                                    {/* TO:DO make sure that the button is also disabled when it is rejected */}
+                                    <button disabled={tour.status === 'pending' || tour.status === 'rejected'} onClick={() => {
                                         handleAccept(
 
                                         )
                                     }}
-                                        className="btn btn-success mr-2">Accept</button>
-                                    <button onClick={() => handleReject(
-                                        {
-                                            clientEmail: tour?.userEmail, guideEmail: tour?.guideEmail,
-                                            packageId: tour?.packageId
-                                        }
-                                    )} className="btn btn-error">Reject</button>
+                                        className="btn btn-sm btn-success mr-2">Accept</button>
+                                    <button
+                                        disabled={tour.status === 'rejected'}
+                                        onClick={() => handleReject(
+                                            {
+                                                clientEmail: tour?.userEmail, guideEmail: tour?.guideEmail,
+                                                packageId: tour?.packageId
+                                            }
+                                        )} className="btn btn-error btn-sm">Reject</button>
 
                                 </td>
                             </tr>)}

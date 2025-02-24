@@ -41,6 +41,15 @@ const BookingRow = ({ pkg, i, refetch }) => {
     const handlePayment = () => {
         console.log('pay with Stripe');
     }
+    const handleStatus = (status) => {
+        if (status === 'pending') {
+            return "text-yellow-500";
+        } else if (status === 'rejected') {
+            return "text-red-500";
+        } else {
+            return 'text-green-500'
+        }
+    }
     return (
         <>
             <tr >
@@ -49,7 +58,7 @@ const BookingRow = ({ pkg, i, refetch }) => {
                 <td>{guideName}</td>
                 <td>{new Date(tourDate).toLocaleDateString('en-GB')}</td>
                 <td>{price}</td>
-                <td>{status}</td>
+                <td className={` ${handleStatus(status)} uppercase font-semibold`}>{status}</td>
                 <td className='flex items-center gap-3'>
                     <button onClick={handlePayment} disabled={status !== 'pending'} className="btn btn-info">{status === 'in-review' ? ' Paid' : 'Pay'}</button>
                     {

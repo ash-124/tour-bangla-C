@@ -14,6 +14,7 @@ import ManageUsers from "../pages/DashBoard/Admin/ManageUsers";
 import ManageCandidates from "../pages/DashBoard/Admin/ManageCandidates";
 import AddPackage from "../pages/DashBoard/Admin/AddPackage";
 import AssignedTours from "../pages/DashBoard/Tour Guide/AssignedTours";
+import AddStory from "../pages/DashBoard/Story/AddStroy";
 
 export const router =createBrowserRouter([
     {
@@ -62,6 +63,10 @@ export const router =createBrowserRouter([
             {
                 path:'my-bookings',
                 element:<MyBookings/>
+            },
+            {
+                path:'add-story',
+                element:<AddStory/>
             },
             // Tour Guide routes
 
