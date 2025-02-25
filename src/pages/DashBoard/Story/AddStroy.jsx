@@ -85,7 +85,7 @@ const AddStory = () => {
                     toast.success('Your story uploaded successfully ')
                     setTitle('');
                     setText('');
-                    setImages([]);
+                    setImages([])
                 }
             }
 
