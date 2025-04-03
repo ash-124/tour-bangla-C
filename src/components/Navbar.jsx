@@ -30,11 +30,21 @@ const Navbar = () => {
     return (
         <div className="navbar fixed z-50  bg-blue-950/50 text-white justify-evenly items-center">
             <div className="navbar-start">
+
+                <Link to={'/'} className="btn btn-ghost text-xl">Tour Bangla</Link>
+                <span><img className='w-10' src="https://i.pinimg.com/474x/bc/8e/76/bc8e764bece45d88dfb31c6fcabca83a.jpg" alt="" /></span>
+            </div>
+            <div className="navbar-center ">
+                <div className="hidden md:flex">
+                    <ul className="menu menu-horizontal px-1 ">
+                        {links}
+                    </ul>
+                </div>
                 <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+                    <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5"
+                            className="h-5 w-5 md:hidden"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -51,13 +61,6 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <Link to={'/'} className="btn btn-ghost text-xl">Tour Bangla</Link>
-                <span><img className='w-10' src="https://i.pinimg.com/474x/bc/8e/76/bc8e764bece45d88dfb31c6fcabca83a.jpg" alt="" /></span>
-            </div>
-            <div className="navbar-center hidden lg:flex">
-                <ul className="menu menu-horizontal px-1">
-                    {links}
-                </ul>
                 {
                     user ? <>
                         <div className="dropdown dropdown-end">

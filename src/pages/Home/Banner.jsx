@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FaSearchLocation } from "react-icons/fa";
+
 
 const Banner = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +20,7 @@ const Banner = () => {
   return (
     <div
       className="relative bg-cover bg-center h-screen bg-banner-img"
-      
+
     >
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -26,14 +28,14 @@ const Banner = () => {
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-end h-full text-white pb-16">
         <h1 className="text-4xl font-bold mb-4">Explore Your Travel</h1>
-        <p className="mb-6 text-lg">
+        <p className="mb-6 text-lg text-center">
           Discover your next great adventure, become an explorer to get started!
         </p>
 
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white text-slate-500 p-4 rounded-lg shadow-lg flex items-center space-x-4 "
+          className="bg-white text-slate-500 p-2 rounded-lg shadow-lg flex items-center gap-2  text-sm "
         >
           {/* Destination Input */}
           <input
@@ -44,7 +46,7 @@ const Banner = () => {
             onChange={(e) =>
               setFormData({ ...formData, destination: e.target.value })
             }
-            className="p-2 border border-gray-300 rounded-lg flex-grow"
+            className="p-2 border border-gray-300 rounded-lg "
           />
 
           {/* Date Picker */}
@@ -52,7 +54,7 @@ const Banner = () => {
             selected={formData.date}
             onChange={(date) => setFormData({ ...formData, date })}
             placeholderText="When"
-            className="p-2 border border-gray-300 rounded-lg flex-grow"
+            className="p-2 border border-gray-300 rounded-lg "
           />
 
           {/* Type Select */}
@@ -62,7 +64,7 @@ const Banner = () => {
             onChange={(e) =>
               setFormData({ ...formData, type: e.target.value })
             }
-            className="p-2 text-slate-500 border border-gray-300 rounded-lg flex-grow"
+            className="p-2 text-slate-500 border border-gray-300 rounded-lg "
           >
             <option value="" disabled>
               Select Type
@@ -76,9 +78,10 @@ const Banner = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600"
+            className="bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600"
           >
-            Find Now
+           <span className="md:hidden"> <FaSearchLocation/></span>
+            <p className="hidden md:block">Find Now</p>
           </button>
         </form>
       </div>
