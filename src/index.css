@@ -4,3 +4,10 @@
 .active{
     background-color: aqua;
 }
+.btn-prime{
+    @apply bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600
+}
+.react-tabs__tab--selected{
+    background-color: orange;
+    color: white;
+}

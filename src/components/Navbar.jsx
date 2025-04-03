@@ -40,8 +40,8 @@ const Navbar = () => {
                         {links}
                     </ul>
                 </div>
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn btn-ghost md:hidden">
+                <div className="dropdown md:hidden">
+                    <div tabIndex={0} role="button" className="btn btn-ghost ">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             className="h-5 w-5 md:hidden"

@@ -7,13 +7,13 @@ const TourismContainer = () => {
     return (
         <div className='my-20'>
             <Tabs>
-                <TabList className={'text-center'}>
+                <TabList className={'text-center '}>
                     <Tab>Our Packages</Tab>
                     <Tab>Meet Our Tour Guides</Tab>
                 </TabList>
                 <TabPanel>
                     <Package />
-                    <Link to={'/packages'}><div className=' w-full btn text-center'> See all Packages</div></Link>
+                    <Link to={'/packages'}><div className=' btn-prime rounded-none  w-full text-center mt-5'> See all Packages</div></Link>
                 </TabPanel>
                 <TabPanel>
                     <GuideSection />

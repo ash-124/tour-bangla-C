@@ -78,10 +78,10 @@ const Banner = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="bg-orange-500 flex items-center justify-center text-white px-3 py-2 rounded-lg hover:bg-orange-600 flex-grow"
+            className=" btn-prime flex items-center justify-center flex-grow"
           >
             <p className="hidden md:block">Find Now</p>
-            <span className="ml-1"> <FaSearchLocation/></span>
+            <span className="ml-1"> <FaSearchLocation /></span>
 
           </button>
         </form>
