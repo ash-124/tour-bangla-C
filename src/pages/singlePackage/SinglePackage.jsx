@@ -4,17 +4,17 @@ const SinglePackage = ({ pkg }) => {
     const navigate = useNavigate();
     return (
         <>
-            <div className="card w-[270px] shadow-xl">
+            <div className="card w-[270px] h-[288px] shadow-xl">
                 <figure>
                     <img
                         src={pkg.images[0]}
                         alt={pkg.name}
-                        className="h-48 w-full object-cover"
+                        className="h-32 w-full object-cover"
                     />
                 </figure>
-                <div className=" p-4 flex flex-col gap-2  ">
+                <div className=" p-3 flex flex-col gap-2  ">
                     <h2 className="  font-bold  ">{pkg.name}</h2>
-                    <p className="text-sm text-gray-500 mt-2">: {pkg.description?.slice(0,35)}......</p>
+                    <p className="text-sm text-gray-500 "> {pkg.description?.slice(0, 35)}......</p>
                     <div className="flex justify-between items-center">
                         <p className="text-lg font-bold text-orange-500">৳{pkg.price}</p>
                         <p className=" text-sm text-black">{pkg?.duration}</p>

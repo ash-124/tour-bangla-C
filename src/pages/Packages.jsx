@@ -23,7 +23,7 @@ const Packages = () => {
     console.log("package data's", packages)
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-16 gap-6 p-4">
+        <div className=" w-11/12 mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-16 gap-6 p-4">
             {packages.map(pkg => <SinglePackage key={pkg._id} pkg={pkg} />)}
 
         </div>

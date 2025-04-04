@@ -18,7 +18,7 @@ const Navbar = () => {
             </li>
 
             <li>
-                <NavLink to={'/community'}>Community</NavLink>
+                <NavLink to={'/packages'}>Packages</NavLink>
             </li>
             <li>
                 <NavLink to={'/about-us'}>About us</NavLink>
@@ -57,7 +57,7 @@ const Navbar = () => {
                     </div>
                     <ul
                         tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                        className="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-52 p-2 shadow bg-slate-600">
                         {links}
                     </ul>
                 </div>
@@ -85,7 +85,7 @@ const Navbar = () => {
 
                                     </Link>
                                 </li>
-                                <li><a>Settings</a></li>
+                                {/* <li><a>Settings</a></li> */}
                                 <li> <button onClick={handleLogOut} className="btn btn-ghost">LogOut</button></li>
                             </ul>
                         </div>
