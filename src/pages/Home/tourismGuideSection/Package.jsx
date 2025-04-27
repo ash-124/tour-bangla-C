@@ -22,7 +22,7 @@ const Package = () => {
         return <div>Loading packages...</div>;
     }
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4 justify-center items-center w-11/12 mx-auto ">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center max-w-4xl py-5 mx-auto  ">
             {packages.map(pkg => <SinglePackage key={pkg._id} pkg={pkg} />)}
 
         </div>

@@ -23,7 +23,6 @@ const AddStory = () => {
     const handleRemoveImage = (index) => {
         setImages((prevImages) => prevImages.filter((_, i) => i !== index));
     };
-    // TO:DO make an function to upload img to imgbb and get img link
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsUploading(true)
