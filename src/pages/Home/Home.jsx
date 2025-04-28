@@ -4,6 +4,7 @@ import { GiConfirmed } from "react-icons/gi";
 import { PiDetective } from "react-icons/pi";
 import { FaHeart, FaHeadset } from "react-icons/fa6";
 import FeaturedCard from '../../components/Home/FeaturedCard';
+import FeaturedDestinations from '../../components/Home/FeaturedDestinations';
 
 const Home = () => {
     const FeaturedCardData = [
@@ -33,10 +34,11 @@ const Home = () => {
             <Banner />
             <div className='relative min-h-[50vh] flex items-center justify-center'>
                 <div className='  absolute -top-10  flex  w-11/12 gap-5 items-center justify-center'>
-                    {FeaturedCardData.map(card => <FeaturedCard title={card.title} description={card.description} icon={card.icon} />)}
+                    {FeaturedCardData.map(card => <FeaturedCard key={card.title} title={card.title} description={card.description} icon={card.icon} />)}
                 </div>
             </div>
             <TourismContainer />
+            <FeaturedDestinations/>
         </div>
     );
 };
