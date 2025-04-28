@@ -11,3 +11,6 @@
     background-color: orange;
     color: white;
 }
+.dashboard{
+    @apply text-[#2B3440] font-semibold
+}

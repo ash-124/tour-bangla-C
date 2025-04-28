@@ -142,7 +142,7 @@ const AddPackage = () => {
                 <input
                     {...register("tags")}
                     placeholder="Tags (comma separated (e.g. Featured, top..)"
-                    className="w-full p-2 col-span-2 border rounded" />
+                    className="w-full p-2  border rounded" />
                 <textarea
                     {...register("description")}
                     placeholder="Description"
@@ -204,7 +204,7 @@ const AddPackage = () => {
                 )}
 
                 <button type="submit" className="w-full col-span-2 bg-[#2B3440] text-white py-2 rounded hover:bg-[#1a1d21] transition">
-                {isUploading ? <span className="loading loading-spinner text-accent"></span>
+                {isUploading ? <span className="loading loading-spinner text-white"></span>
                     : "Add Package"}
                 </button>
             </form>

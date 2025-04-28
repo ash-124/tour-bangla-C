@@ -18,10 +18,10 @@ const Dashboard = () => {
         }
     }, [pathname, isTourist, isAdmin, isTourGuide])
     return (
-        <div className="flex">
+        <div className="flex ">
             {/* dashboard side bar */}
             <div className="w-64 min-h-screen bg-blue-950/20">
-                <ul className="menu p-4">
+                <ul className="menu p-4 dashboard ">
                     {/* isAdmin condition */}
                     {isAdmin &&
                         <>
