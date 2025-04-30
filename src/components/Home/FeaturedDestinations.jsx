@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 import 'swiper/css/pagination';
-
+import 'swiper/css/navigation';
 
 // import required modules
 import { FreeMode, Pagination, Navigation, Autoplay } from 'swiper/modules';
@@ -31,9 +31,9 @@ export default function FeaturedDestinations() {
       <h2 className='text-3xl font-bold ml-5 py-5'> Featured Destinations</h2>
       <Swiper
         slidesPerView={3}
-        spaceBetween={30}
+        spaceBetween={10}
         autoplay={{
-            delay: 2500,
+            delay: 3500,
             disableOnInteraction: false,
           }}
         freeMode={true}
@@ -44,16 +44,12 @@ export default function FeaturedDestinations() {
         modules={[FreeMode, Pagination, Navigation, Autoplay]}
         className="mySwiper"
       >
-        {featuredPackage?.map(featured =><SwiperSlide> <SinglePackage key={featured._id} pkg={featured} /></SwiperSlide>)}
+        {featuredPackage?.map(featured =><SwiperSlide key={featured._id}> <SinglePackage  pkg={featured} /></SwiperSlide>)}
        
         <SwiperSlide>Slide 2</SwiperSlide>
         <SwiperSlide>Slide 3</SwiperSlide>
         <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+        
       </Swiper>
       </div>
     </>

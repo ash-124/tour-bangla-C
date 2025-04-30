@@ -5,6 +5,8 @@ import { PiDetective } from "react-icons/pi";
 import { FaHeart, FaHeadset } from "react-icons/fa6";
 import FeaturedCard from '../../components/Home/FeaturedCard';
 import FeaturedDestinations from '../../components/Home/FeaturedDestinations';
+import FunFacts from '../../components/Home/FunFacts';
+import WhyChoseUS from '../../components/Home/WhyChoseUS';
 
 const Home = () => {
     const FeaturedCardData = [
@@ -39,6 +41,8 @@ const Home = () => {
             </div>
             <TourismContainer />
             <FeaturedDestinations/>
+            <FunFacts/>
+            <WhyChoseUS/>
         </div>
     );
 };
