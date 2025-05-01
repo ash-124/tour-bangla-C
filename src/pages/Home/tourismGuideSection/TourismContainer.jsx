@@ -11,9 +11,11 @@ const TourismContainer = () => {
                     <Tab>Our Packages</Tab>
                     <Tab>Meet Our Tour Guides</Tab>
                 </TabList>
-                <TabPanel>
-                    <Package />
-                    <Link to={'/packages'}><div className=' btn-prime rounded-none  w-full text-center mt-5'> See all Packages</div></Link>
+                <TabPanel className={'flex items-center justify-center '}>
+                    <div>
+                        <Package />
+                        <Link to={'/packages'}><div className=' btn-prime rounded-none  w-full text-center mt-5'> See all Packages</div></Link>
+                    </div>
                 </TabPanel>
                 <TabPanel>
                     <GuideSection />

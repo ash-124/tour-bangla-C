@@ -19,7 +19,7 @@ const Banner = () => {
 
   return (
     <div
-      className="relative bg-cover bg-center h-screen bg-banner-img"
+      className="relative bg-cover bg-center h-screen bg-banner-img mb-10 md:mb-0"
 
     >
       {/* Dark overlay */}

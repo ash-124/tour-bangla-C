@@ -22,10 +22,12 @@ const Package = () => {
         return <div>Loading packages...</div>;
     }
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center max-w-4xl py-5 mx-auto  ">
+       <div className='flex items-center justify-center'>
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center items-center max-w-4xl py-5 mx-auto gap-5 md:gap-0 ">
             {packages.map(pkg => <SinglePackage key={pkg._id} pkg={pkg} />)}
 
         </div>
+       </div>
     );
 };
 

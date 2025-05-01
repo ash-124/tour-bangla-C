@@ -35,7 +35,7 @@ const Home = () => {
         <div>
             <Banner />
             <div className='relative min-h-[50vh] flex items-center justify-center'>
-                <div className='  absolute -top-10  flex  w-11/12 gap-5 items-center justify-center'>
+                <div className='  md:absolute -top-10 grid grid-cols-2  md:grid-cols-4  w-11/12 gap-5 items-center justify-center'>
                     {FeaturedCardData.map(card => <FeaturedCard key={card.title} title={card.title} description={card.description} icon={card.icon} />)}
                 </div>
             </div>

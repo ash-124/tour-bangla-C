@@ -48,7 +48,7 @@ const WhyChoseUS = () => {
     return (
         <div className='bg-blue-950/30 text-white  flex items-center justify-center min-h-screen'>
 
-            <div className='flex  items-center justify-center w-11/12 mx-auto gap-24 '>
+            <div className='flex py-10 flex-col-reverse md:flex-row  items-center justify-center w-11/12 mx-auto gap-24 '>
                 <div className='flex flex-col flex-1 gap-5'>
                     <h3 className='text-3xl font-bold'>Why Choose Us?</h3>
                     <p className='text-gray-200'>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
