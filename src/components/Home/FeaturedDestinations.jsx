@@ -30,7 +30,6 @@ export default function FeaturedDestinations() {
       <div className='w-11/12 mx-auto '>
       <h2 className='text-3xl font-bold ml-5 py-5'> Featured Destinations</h2>
       <Swiper
-        slidesPerView={3}
         spaceBetween={10}
         autoplay={{
             delay: 3500,
@@ -42,6 +41,21 @@ export default function FeaturedDestinations() {
         }}
         navigation={true}
         modules={[FreeMode, Pagination, Navigation, Autoplay]}
+        breakpoints={
+          {
+            0:{
+              slidesPerView:1,
+            },
+            768:{
+              slidesPerView:2,
+              spaceBetween:10
+            },
+            1024:{
+              slidesPerView:3,
+              spaceBetween:20
+            }
+          }
+        }
         className="mySwiper"
       >
         {featuredPackage?.map(featured =><SwiperSlide key={featured._id}> <SinglePackage  pkg={featured} /></SwiperSlide>)}
