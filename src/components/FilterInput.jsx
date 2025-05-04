@@ -1,9 +1,25 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
+import { useEffect, useState } from "react";
 
-const FilterInput = ({ setFilter }) => {
-    const handleChange = (e) => {
-        setFilter(e.target.getAttribute('aria-label'))
-    }
-    const filterTerms = ['Tourist', 'Tour Guide', 'Admin'];
+const FilterInput = ({ setSelectedUsers }) => {
+    const axiosPublic = useAxiosPublic();
+    const [role, setRole] = useState("");
+    const { data: users =[], refetch } = useQuery({
+        queryKey: ["filtered users"],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get(`/users?role=${role}`);
+            return data
+        }
+    })
+    useEffect(()=>{
+        setSelectedUsers(users?.users);
+        refetch();
+
+    },[role, users])
+    console.log({filterQuery:role, filterData:users})
+
+    const filterTerms = ['Tourist', 'Tour-Guide', 'Admin'];
     return (
         <div>
             <form className="filter flex items-center gap-2">
@@ -11,14 +27,14 @@ const FilterInput = ({ setFilter }) => {
                 <input className="btn btn-sm btn-square"
                     type="reset"
                     value="×"
-                    onClick={() => setFilter('')} />
+                    onClick={() => setRole('')} />
                 {/* Filter items */}
                 {filterTerms.map((term, i) => <input key={i}
                     className="btn btn-xs"
                     type="radio"
                     name="role"
                     aria-label={term}
-                    onChange={handleChange} />)}
+                    onChange={(e)=>setRole( e.target.getAttribute('aria-label').toLowerCase())} />)}
             </form>
         </div>
     );
