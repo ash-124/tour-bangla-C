@@ -1,24 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
-import { useEffect, useState } from "react";
 
-const FilterInput = ({ setSelectedUsers }) => {
-    const axiosPublic = useAxiosPublic();
-    const [role, setRole] = useState("");
-    const { data: users =[], refetch } = useQuery({
-        queryKey: ["filtered users"],
-        queryFn: async () => {
-            const { data } = await axiosPublic.get(`/users?role=${role}`);
-            return data
-        }
-    })
-    useEffect(()=>{
-        setSelectedUsers(users?.users);
-        refetch();
 
-    },[role, users])
-    console.log({filterQuery:role, filterData:users})
-
+const FilterInput = ({role, setRole }) => {
+    
     const filterTerms = ['Tourist', 'Tour-Guide', 'Admin'];
     return (
         <div>

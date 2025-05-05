@@ -1,19 +1,65 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import FilterInput from "../../../components/FilterInput";
 import SearchInput from "../../../components/SearchInput";
-import useUsers from "../../../Hooks/useUsers";
-
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import toast from 'react-hot-toast'
+import Swal from "sweetalert2";
 const ManageUsers = () => {
-    const { users, isLoading, error } = useUsers();
-    const [selectedUsers, setSelectedUsers] = useState([])
-    useEffect(() => {
-        if (users) {
-            setSelectedUsers(users)
+    const [search, setSearch] = useState("");
+    const [role, setRole] = useState("");
+    const axiosPublic = useAxiosPublic();
+    const { data: usersData = [], isLoading, error, refetch } = useQuery({
+        queryKey: ["users", search, role],
+        queryFn: async () => {
+            const { data } = await axiosPublic.get(`/users?role=${role}&search=${search}`)
+            return data.users
         }
-    }, [])
-    // TO:DO improve search & filter functionality
-    console.log(users)
-    console.log('selectedUsers', selectedUsers)
+    })
+    if (error) {
+        toast.error(error.message);
+        console.log(error)
+    }
+
+
+    const selectedUsers = usersData || [];
+    console.log('selected users', selectedUsers);
+
+    const handleTerminate = (email) => {
+        console.log(email)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, terminate!"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const { data } = await axiosPublic.delete(
+                        '/user', 
+                        { data: { userEmail: email } }
+                    );
+                    console.log("Delete user data", data)
+                    if (data?.deletedCount > 0) {
+                        refetch()
+                        Swal.fire({
+                            title: "Terminated!",
+                            text: `${email} has been terminated`,
+                            icon: "success"
+                        });
+                    }
+                } catch (error) {
+                    console.log(error);
+                    toast.error(error.message)
+                }
+
+            }
+        });
+
+    }
     return (
         <div>
             <div className="flex flex-col text-center items-center justify-center">
@@ -22,8 +68,8 @@ const ManageUsers = () => {
 
             </div>
             <div className="flex w-11/12 mx-auto justify-between items-center mt-10 mb-2">
-                <SearchInput setSelectedUsers={setSelectedUsers} />
-                <FilterInput setSelectedUsers={setSelectedUsers} />
+                <SearchInput search={search} setSearch={setSearch} />
+                <FilterInput role={role} setRole={setRole} />
             </div>
             <div className="mb-10 border border-dashed "></div>
 
@@ -42,19 +88,27 @@ const ManageUsers = () => {
                     </thead>
                     <tbody>
                         {/* row 1 */}
-                        {selectedUsers?.map((user, i) =>
-                            <tr key={user?._id}>
-                                <th>{i + 1}</th>
-                                <td className="w-20 h-20 "><img className="w-full object-cover h-full rounded-t-lg " src={user?.photoURL} /></td>
-                                <td>{user?.name}</td>
-                                <td>{user?.role}</td>
-                                <td>{user?.email}</td>
-                                <td className="flex">
-                                    <button onClick={() => { handleAccept(user?.applicantEmail) }} className="btn btn-xs text-white btn-success mr-2">Accept</button>
-                                    <button onClick={() => handleReject(user?._id)} className="btn btn-xs btn-error text-white ">Reject</button>
+                        {
+                            isLoading
+                                ?
+                                <div className="flex items-center justify-center text-center">
+                                    <span className="loading py-20 loading-dots loading-lg"></span>
+                                </div>
+                                :
+                                selectedUsers?.map((user, i) =>
+                                    <tr key={user?._id}>
+                                        <th>{i + 1}</th>
+                                        <td className="w-20 h-20 "><img className="w-full object-cover h-full rounded-t-lg " src={user?.photoURL} /></td>
+                                        <td>{user?.name}</td>
+                                        <td>{user?.role}</td>
+                                        <td>{user?.email}</td>
+                                        <td >
+                                            <button onClick={() => { handleTerminate(user?.email) }} className="btn btn-xs btn-error ">Terminate</button>
 
-                                </td>
-                            </tr>)}
+                                        </td>
+                                    </tr>)
+                        }
+
 
                     </tbody>
                 </table>
