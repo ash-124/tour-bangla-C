@@ -15,6 +15,7 @@ import ManageCandidates from "../pages/DashBoard/Admin/ManageCandidates";
 import AddPackage from "../pages/DashBoard/Admin/AddPackage";
 import AssignedTours from "../pages/DashBoard/Tour Guide/AssignedTours";
 import AddStory from "../pages/DashBoard/Story/AddStroy";
+import Payments from "../pages/Payments/Payments";
 
 export const router =createBrowserRouter([
     {
@@ -54,6 +55,11 @@ export const router =createBrowserRouter([
             {
                 path:'profile',
                 element:<Profile/>
+            },
+            // payment routes
+            {
+                path:'pay',
+                element:<Payments/>
             },
             {
                 path:'join-tour-guide',

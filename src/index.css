@@ -1,16 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.active{
-    @apply bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600
+.active {
+  @apply bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600;
 }
-.btn-prime{
-    @apply bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600
+.btn-prime {
+  @apply bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600;
 }
-.react-tabs__tab--selected{
-    background-color: orange;
-    color: white;
+.react-tabs__tab--selected {
+  background-color: orange;
+  color: white;
 }
-.dashboard{
-    @apply text-[#2B3440] font-semibold
+.dashboard {
+  @apply text-[#2B3440] font-semibold;
 }

@@ -76,10 +76,10 @@ const AddStory = () => {
                 user: user?.email
             };
             console.log(storyData)
-            
+
             if (storyData.images) {
-                const {data} = await axiosPublic.post('/story/upload',storyData)
-                if(data?.insertedId){
+                const { data } = await axiosPublic.post('/story/upload', storyData)
+                if (data?.insertedId) {
                     setIsUploading(false)
                     toast.success('Your story uploaded successfully ')
                     setTitle('');
@@ -98,32 +98,32 @@ const AddStory = () => {
     console.log(isUploading)
 
     return (
-        <div className="max-w-2xl mx-auto p-6 bg-indigo-200 rounded-lg shadow-md ">
-            <h2 className="text-2xl font-semibold mb-4">Add Story</h2>
+        <div className="max-w-2xl mx-auto p-6 bg-[#2B3440] rounded-lg shadow-md ">
+            <h2 className="text-2xl font-semibold mb-4 text-center text-[#BFC1CC]">Add Story</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                     type="text"
                     placeholder="Story Title"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full p-2 border-2 border-purple-600 rounded"
+                    className="w-full p-2 border-2 border-[#BFC1CC] rounded"
                     required
                 />
                 <textarea
                     placeholder="Write your story..."
                     value={text}
                     onChange={(e) => setText(e.target.value)}
-                    className="w-full p-2 border-2 border-purple-600 rounded"
+                    className="w-full p-2 border-2 border-[#BFC1CC] rounded"
                     rows="5"
                     required
                 ></textarea>
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center text-white">
                     <input
                         type="file"
                         multiple
                         accept="image/*"
                         onChange={handleImageUpload}
-                        className="w-[80%] border-2 border-spacing-3 border-dashed border-purple-600 p-4 py-12 rounded"
+                        className="w-[80%] border-2 border-spacing-3 border-dashed border-[#BFC1CC] p-4 py-12 rounded"
                     />
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -144,9 +144,9 @@ const AddStory = () => {
                         </div>
                     ))}
                 </div>
-                <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+                <button type="submit" className="bg-[#BFC1CC] text-[#2B3440] px-4 py-2 rounded">
                     {isUploading ? <span className="loading loading-spinner text-accent"></span>
-                    : "Submit"}
+                        : "Submit"}
                 </button>
             </form>
         </div>
