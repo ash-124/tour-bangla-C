@@ -24,30 +24,27 @@ const MyBookings = () => {
         )
     }
     return (
-        <div className="overflow-x-auto">
-            <table className="table">
-                {/* head */}
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th> Package</th>
-                        <th>Guide</th>
-                        <th>Date</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/* row 1 */}
-                    {
-                        bookedPackages && bookedPackages.map((pkg, idx) =>
+        <div className="w-full overflow-x-auto">
+            <div className="inline-block min-w-[700px] w-full">
+                <table className="table w-full text-sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Package</th>
+                            <th>Guide</th>
+                            <th>Date</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bookedPackages.map((pkg, idx) => (
                             <BookingRow refetch={refetch} key={pkg._id} pkg={pkg} i={idx} />
-                        )
-                    }
-
-                </tbody>
-            </table>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 };

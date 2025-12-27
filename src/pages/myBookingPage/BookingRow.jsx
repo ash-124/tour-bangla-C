@@ -1,74 +1,104 @@
-import React from 'react';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
+import { FaTimes, FaCreditCard } from "react-icons/fa";
 
 const BookingRow = ({ pkg, i, refetch }) => {
-    const { packageId, userEmail, packageName, guideName, tourDate, price, status } = pkg;
-    const axiosPublic = useAxiosPublic();
+  const {
+    packageId,
+    userEmail,
+    packageName,
+    guideName,
+    tourDate,
+    price,
+    status
+  } = pkg;
 
-    const handleCancelBooking = () => {
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, cancelled it"
-        }).then(async (result) => {
-            const cancelData = { packageId, email: userEmail }
-            console.log('cancel data before request', cancelData)
-            if (result.isConfirmed) {
-                const { data } = userEmail && await axiosPublic.delete('/cancel-booking', {
-                    data: cancelData,
-                    headers: { "Content-Type": "application/json" }
-                })
-                console.log(data);
-                refetch();
-                if (data?.deletedCount) {
-                    Swal.fire({
-                        title: "Cancelled!",
-                        text: "Your tour has been cancelled .",
-                        icon: "success"
-                    });
-                }
+  const axiosPublic = useAxiosPublic();
 
-            }
+  const handleCancelBooking = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, cancel it",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const { data } = await axiosPublic.delete('/cancel-booking', {
+          data: { packageId, email: userEmail },
+          headers: { "Content-Type": "application/json" }
         });
 
-
-    }
-    const handlePayment = () => {
-        console.log('pay with Stripe');
-    }
-    const handleStatus = (status) => {
-        if (status === 'pending') {
-            return "text-yellow-500";
-        } else if (status === 'rejected') {
-            return "text-red-500";
-        } else {
-            return 'text-green-500'
+        if (data?.deletedCount) {
+          refetch();
+          Swal.fire("Cancelled!", "Your tour has been cancelled.", "success");
         }
-    }
-    return (
-        <>
-            <tr >
-                <th>{i + 1}</th>
-                <td>{packageName}</td>
-                <td>{guideName}</td>
-                <td>{new Date(tourDate).toLocaleDateString('en-GB')}</td>
-                <td>{price}</td>
-                <td className={` ${handleStatus(status)} uppercase font-semibold`}>{status}</td>
-                <td className='flex items-center gap-3'>
-                    <button onClick={handlePayment} disabled={status !== 'pending'} className="btn btn-info">{status === 'in-review' ? ' Paid' : 'Pay'}</button>
-                    {
-                        status === 'pending' && <button onClick={handleCancelBooking} className="btn btn-warning">Cancel</button>
-                    }
-                </td>
-            </tr>
+      }
+    });
+  };
 
-        </>
-    );
+  const handlePayment = () => {
+    console.log('pay with Stripe');
+  };
+
+  return (
+    <tr>
+      <th>{i + 1}</th>
+
+      <td className="whitespace-normal ">
+        {packageName}
+      </td>
+
+      <td className="text-xs">
+        {guideName}
+      </td>
+
+      <td className="text-xs">
+        {new Date(tourDate).toLocaleDateString('en-GB')}
+      </td>
+
+      <td>${price}</td>
+
+      <td>
+        <span
+          className={`badge badge-sm uppercase text-xs text-white ${
+            status === "pending"
+              ? "badge-warning"
+              : status === "rejected"
+              ? "badge-error"
+              : "badge-success"
+          }`}
+        >
+          {status}
+        </span>
+      </td>
+
+      <td>
+        <div className="flex flex-wrap items-center gap-1">
+          {/* Pay */}
+          <button
+            onClick={handlePayment}
+            disabled={status !== 'pending'}
+            className="btn btn-xs btn-success"
+            title="Pay"
+          >
+            <FaCreditCard />
+          </button>
+
+          {/* Cancel */}
+          {status === 'pending' && (
+            <button
+              onClick={handleCancelBooking}
+              className="btn btn-xs btn-error"
+              title="Cancel"
+            >
+              <FaTimes />
+            </button>
+          )}
+        </div>
+      </td>
+    </tr>
+  );
 };
 
 export default BookingRow;
