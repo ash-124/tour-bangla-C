@@ -30,46 +30,74 @@ const ApplyAsGuide = () => {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center mb-4">Join as a Tour Guide</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium">Application Title</label>
-            <input name='title' type="text" required className="input input-bordered w-full" />
-          </div>
+    <div className=" flex  justify-center items-center">
+      <div className="flex flex-col w-full items-center ">
+        <h2 className=" text-xl md:text-2xl font-semibold md:mb-4 mb-2  text-center text-[#BFC1CC] uppercase">Join as Tour Guide
 
-          <div>
-            <label className="block text-sm font-medium">Why do you want to be a Tour Guide?</label>
-            <textarea name='inspiration' required className="textarea textarea-bordered w-full"></textarea>
-          </div>
+        </h2>
+        <div className="w-full max-w-lg p-4 md:p-6 rounded-lg shadow-md border-2 bg-[#2B3440] border-[#BFC1CC]">
 
-          <div>
-            <label className="block text-sm font-medium">CV Link </label>
-            <input name='cvURL' type="url" className="file-input file-input-bordered w-full max-w-xs" />
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-white mb-2">Application Title</label>
+              <input
+                name="title"
+                type="text"
+                required
+                className="w-full p-2 rounded border-2 border-[#BFC1CC]  placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#BFC1CC]"
+              />
+            </div>
 
-          <button type="submit" className="btn btn-primary w-full">
-            Submit Application
-          </button>
-        </form>
+            <div>
+              <label className="block text-sm font-medium text-white mb-2">Why do you want to be a Tour Guide?</label>
+              <textarea
+                name="inspiration"
+                required
+                className="w-full p-2 rounded border-2 border-[#BFC1CC] placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#BFC1CC]"
+                rows={4}
+              ></textarea>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-white mb-2">CV Link</label>
+              <input
+                name="cvURL"
+                type="url"
+                className="w-full p-2 rounded border-2 border-[#BFC1CC] placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-[#BFC1CC]"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2 px-4 rounded bg-[#BFC1CC] text-[#2B3440] font-semibold hover:bg-[#D0D1D8] transition"
+            >
+              Submit Application
+            </button>
+          </form>
+        </div>
       </div>
 
-      {/* DaisyUI Modal */}
-      {
-        isSubmitted && <dialog id="successModal" className=' modal modal-open'>
-          <div className="modal-box">
-            <h3 className="text-xl font-bold text-green-600">Application Successful!</h3>
-            <p className="mt-2 text-gray-600">Your application has been submitted successfully.</p>
+      {/* Success Modal */}
+      {isSubmitted && (
+        <dialog id="successModal" className="modal modal-open">
+          <div className="modal-box bg-[#2B3440] border-2 border-[#BFC1CC]">
+            <h3 className="text-xl font-bold text-green-400">Application Successful!</h3>
+            <p className="mt-2 text-white">Your application has been submitted successfully.</p>
             <div className="modal-action">
-              <button className="btn btn-primary" onClick={() => setIsSubmitted(false)}>
+              <button
+                className="bg-[#BFC1CC] text-[#2B3440] px-4 py-2 rounded font-semibold hover:bg-[#D0D1D8]"
+                onClick={() => setIsSubmitted(false)}
+              >
                 Close
               </button>
             </div>
           </div>
         </dialog>
-      }
+      )}
     </div>
+
+
+
   );
 };
 
