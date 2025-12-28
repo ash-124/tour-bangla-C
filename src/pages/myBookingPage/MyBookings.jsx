@@ -1,4 +1,3 @@
-import React from 'react';
 import useAuth from '../../Hooks/useAuth';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
@@ -39,7 +38,7 @@ const MyBookings = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {bookedPackages.map((pkg, idx) => (
+                        {bookedPackages?.map((pkg, idx) => (
                             <BookingRow refetch={refetch} key={pkg._id} pkg={pkg} i={idx} />
                         ))}
                     </tbody>

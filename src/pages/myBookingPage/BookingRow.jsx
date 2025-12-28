@@ -1,9 +1,11 @@
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 import { FaTimes, FaCreditCard } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
 
 const BookingRow = ({ pkg, i, refetch }) => {
   const {
+    _id,
     packageId,
     userEmail,
     packageName,
@@ -11,8 +13,8 @@ const BookingRow = ({ pkg, i, refetch }) => {
     tourDate,
     price,
     status
-  } = pkg;
-
+  } = pkg || {};
+  const navigate = useNavigate();
   const axiosPublic = useAxiosPublic();
 
   const handleCancelBooking = () => {
@@ -37,9 +39,6 @@ const BookingRow = ({ pkg, i, refetch }) => {
     });
   };
 
-  const handlePayment = () => {
-    console.log('pay with Stripe');
-  };
 
   return (
     <tr>
@@ -77,7 +76,7 @@ const BookingRow = ({ pkg, i, refetch }) => {
         <div className="flex flex-wrap items-center gap-1">
           {/* Pay */}
           <button
-            onClick={handlePayment}
+            onClick={()=>navigate(`/dashboard/pay/${_id}`)}
             disabled={status !== 'pending'}
             className="btn btn-xs btn-success"
             title="Pay"

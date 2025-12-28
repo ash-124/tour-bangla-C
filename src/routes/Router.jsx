@@ -58,7 +58,7 @@ export const router =createBrowserRouter([
             },
             // payment routes
             {
-                path:'pay',
+                path:'pay/:id',
                 element:<Payments/>
             },
             {
