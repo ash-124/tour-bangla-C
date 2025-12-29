@@ -17,7 +17,8 @@ const Payments = () => {
             return data;
         }
     })
-
+    // console.log("booking data", booking)
+   
     if (isLoading) {
         return (
             <div className='flex items-center justify-center p-10'>
@@ -26,6 +27,7 @@ const Payments = () => {
             </div>
         )
     }
+
     return (
         <Elements stripe={stripePromise}>
             <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">

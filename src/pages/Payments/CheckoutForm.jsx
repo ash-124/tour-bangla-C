@@ -1,23 +1,42 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
-const CheckoutForm = ({booking}) => {
+const CheckoutForm = ({ booking }) => {
     const stripe = useStripe();
     const elements = useElements();
-    const [error, setError] = useState()
-    const handleSubmit = async(e) => {
+    const [transactionID, setTransactionID] = useState(" ")
+    const [error, setError] = useState(" ")
+    const { user } = useAuth()
+    const navigate = useNavigate();
+    const axiosPublic = useAxiosPublic();
+    const {
+        data: clientSecret,
+        isClientSecretLoading,
+        isError,
+    } = useQuery({
+        queryKey: ["payment-intent", booking?._id],
+        enabled: !!booking?.price && !!user?.email, // 🔥 KEY LINE
+        queryFn: async () => {
+            const res = await axiosPublic.post("/create-payment-intent", {
+                bookingId: booking._id,
+                price: booking.price,
+            });
+            return res.data.clientSecret;
+        },
+        staleTime: Infinity, // 🚨 VERY IMPORTANT
+    });
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!stripe || !elements) {
-            // Stripe.js has not loaded yet. Make sure to disable
-            // form submission until Stripe.js has loaded.
             return;
         }
-
-        // Get a reference to a mounted CardElement. Elements knows how
-        // to find your CardElement because there can only ever be one of
-        // each type of element.
-        // const card = elements.getElement(CardElement);
         const card = elements.getElement(CardElement)
 
         if (card == null) {
@@ -37,8 +56,53 @@ const CheckoutForm = ({booking}) => {
             console.log('[PaymentMethod]', paymentMethod);
             setError(" ")
         }
+        //  confirm payment
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(clientSecret, {
+            payment_method: {
+                card: card,
+                billing_details: {
+                    name: user.displayName || 'anonymous',
+                    email: user?.email || 'anonymous'
+                }
+            }
+        })
+        if (confirmError) {
+            setError(confirmError.message);
+            console.log('confirmError', confirmError)
+        } else {
+            setError(" ");
+            console.log("Payment intent", paymentIntent)
+            if (paymentIntent.status === "succeeded") {
+                const paymentData = {
+                    bookingId: booking._id,
+                    packageName: booking.packageName,
+                    transactionId: paymentIntent.id,
+                    amount: paymentIntent.amount,
+                    userEmail: user?.email,
+                    date: new Date()
+                }
+                const { data } = await axiosPublic.patch('/successful-payment', paymentData)
+                if (data?.success === true && data?.changeStatus.modifiedCount) {
+                    toast.success()
+                    Swal.fire({
+                        icon: "success",
+                        title: `${paymentIntent.amount} Paid Successfully`,
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                    
+                    console.log("[save paid data]", data)
+                    // navigate to the bookings page
+                    navigate('/dashboard/my-bookings')
+
+                }
+                setTransactionID(paymentIntent.id);
+            }
+        }
 
     }
+    console.log("client_secret_from_intent", { clientSecret, isClientSecretLoading, isError })
+
     return (
         <form className="space-y-5 " onSubmit={handleSubmit}>
             <CardElement
@@ -58,7 +122,8 @@ const CheckoutForm = ({booking}) => {
                 }}
             />
             {error && <span className="text-red-600 text-xs">{error}</span>}
-            <button type="submit" disabled={!stripe} className="btn w-full bg-gray-300 hover:bg-gray-400 text-gray-900 border-none rounded-md">
+            {transactionID && <span className="text-emerald-600 text-xs"> Transaction ID:{transactionID}</span>}
+            <button type="submit" disabled={!stripe || !clientSecret } className="btn w-full bg-gray-300 hover:bg-gray-400 text-gray-900 border-none rounded-md">
                 Pay ৳ {booking?.price}
             </button>
         </form>
@@ -67,9 +132,3 @@ const CheckoutForm = ({booking}) => {
 };
 
 export default CheckoutForm;
-{/* Stripe CardElement here */ }
-{/* <div className="bg-white rounded-md px-3 py-4">
-                <p className="text-gray-400 text-sm">
-                    Card input field (Stripe)
-                </p>
-            </div> */}
