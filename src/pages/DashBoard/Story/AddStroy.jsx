@@ -73,7 +73,7 @@ const AddStory = () => {
                 title: title,
                 description: text,
                 images: validImages,
-                user: user?.email
+                userEmail: user?.email
             };
             console.log(storyData)
 
@@ -85,6 +85,7 @@ const AddStory = () => {
                     setTitle('');
                     setText('');
                     setImages([])
+                    navigate('/dashboard/manage-stories')
                 }
             }
 

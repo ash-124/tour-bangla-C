@@ -1,43 +1,42 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { FaSearchLocation } from "react-icons/fa";
-
 
 const Banner = () => {
   const [formData, setFormData] = useState({
     destination: "",
-    date: null,
-    type: "",
+    minPrice: "",
+    maxPrice: "",
+    duration: "",
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle the form submission
-    // Add your logic to process the form data here
+    // TODO: handle search logic here
+    console.log(formData);
   };
 
   return (
     <div
-      className="relative bg-cover bg-center h-screen bg-banner-img mb-10 md:mb-0"
-
+      className="relative bg-cover bg-center h-screen bg-banner-img"
+      style={{ minHeight: "calc(100vh - 4rem)" }}
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/50"></div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-end h-full text-white pb-16">
-        <h1 className="text-4xl font-bold mb-4 text-center">Explore Your Travel</h1>
-        <p className="mb-6 text-sm text-center">
-          Discover your next great adventure, become an explorer to get started!
+      <div className="relative z-10 flex flex-col items-center justify-end h-full text-white pb-16 px-4 md:px-0">
+        <h1 className="text-3xl md:text-5xl font-bold mb-4 text-center text-white drop-shadow-lg">
+          Explore Your Travel
+        </h1>
+        <p className="mb-6 text-center text-gray-300 text-sm md:text-base max-w-xl drop-shadow">
+          Find your perfect package within your budget and time.
         </p>
 
-        {/* Form */}
+        {/* Search Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white text-slate-500 p-2 rounded-lg shadow-lg flex flex-wrap items-center gap-2  text-sm "
+          className="bg-white text-[#0F172A] p-3 md:p-4 rounded-xl shadow-lg flex flex-col md:flex-row gap-3 md:gap-4 w-full max-w-4xl"
         >
-          {/* Destination Input */}
+          {/* Destination */}
           <input
             type="text"
             name="destination"
@@ -46,43 +45,57 @@ const Banner = () => {
             onChange={(e) =>
               setFormData({ ...formData, destination: e.target.value })
             }
-            className="p-2 border border-gray-300 rounded-lg flex-grow "
+            className="p-3 border border-[#E5E7EB] rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-[#FF7A18] placeholder:text-[#64748B]"
           />
 
-          {/* Date Picker */}
-          <DatePicker
-            selected={formData.date}
-            onChange={(date) => setFormData({ ...formData, date })}
-            placeholderText="When"
-            className="p-2 border border-gray-300 rounded-lg flex-grow"
-          />
+          {/* Price Range */}
+          <div className="flex  gap-2 ">
+            <input
+              type="number"
+              name="minPrice"
+              placeholder="Min Price"
+              value={formData.minPrice}
+              onChange={(e) =>
+                setFormData({ ...formData, minPrice: e.target.value })
+              }
+              className="p-3 border border-[#E5E7EB] rounded-lg  focus:outline-none focus:ring-2 focus:ring-[#FF7A18] placeholder:text-[#64748B]"
+            />
+            <input
+              type="number"
+              name="maxPrice"
+              placeholder="Max Price"
+              value={formData.maxPrice}
+              onChange={(e) =>
+                setFormData({ ...formData, maxPrice: e.target.value })
+              }
+              className="p-3 border border-[#E5E7EB] rounded-lg  focus:outline-none focus:ring-2 focus:ring-[#FF7A18] placeholder:text-[#64748B]"
+            />
+          </div>
 
-          {/* Type Select */}
+          {/* Duration */}
           <select
-            name="type"
-            value={formData.type}
+            name="duration"
+            value={formData.duration}
             onChange={(e) =>
-              setFormData({ ...formData, type: e.target.value })
+              setFormData({ ...formData, duration: e.target.value })
             }
-            className="p-2 text-slate-500 border border-gray-300 rounded-lg flex-grow "
+            className="p-3 border border-[#E5E7EB] rounded-lg flex-1 focus:outline-none focus:ring-2 focus:ring-[#FF7A18]"
           >
             <option value="" disabled>
-              Select Type
+              Duration
             </option>
-            <option value="adventure">Adventure</option>
-            <option value="beach">Beach</option>
-            <option value="city">City</option>
-            <option value="mountain">Mountain</option>
+            <option value="1 Day">1 Day</option>
+            <option value="2-3 Days">2-3 Days</option>
+            <option value="4-5 Days">4-5 Days</option>
+            <option value="6+ Days">6+ Days</option>
           </select>
 
           {/* Submit Button */}
           <button
             type="submit"
-            className=" btn-prime flex items-center justify-center flex-grow"
+            className="bg-[#FF7A18] text-white rounded-lg px-4 py-2 flex items-center justify-center hover:bg-orange-600 transition-colors"
           >
-            <p className="hidden md:block">Find Now</p>
-            <span className="ml-1"> <FaSearchLocation /></span>
-
+            Search
           </button>
         </form>
       </div>

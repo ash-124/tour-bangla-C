@@ -1,9 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-.active {
+/* .active {
   @apply bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600;
-}
+} */
+ .active{
+  background-color:#FF7A18 ;
+  color: white;
+ }
 .btn-prime {
   @apply bg-orange-500 text-white px-3 py-2 rounded-lg hover:bg-orange-600;
 }
