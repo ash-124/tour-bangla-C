@@ -16,6 +16,7 @@ import AddPackage from "../pages/DashBoard/Admin/AddPackage";
 import AssignedTours from "../pages/DashBoard/Tour Guide/AssignedTours";
 import AddStory from "../pages/DashBoard/Story/AddStroy";
 import Payments from "../pages/Payments/Payments";
+import ManageStories from "../pages/DashBoard/Story/ManageStories";
 
 export const router =createBrowserRouter([
     {
@@ -73,6 +74,10 @@ export const router =createBrowserRouter([
             {
                 path:'add-story',
                 element:<AddStory/>
+            },
+            {
+                path:'manage-stories',
+                element:<ManageStories/>
             },
             // Tour Guide routes
 

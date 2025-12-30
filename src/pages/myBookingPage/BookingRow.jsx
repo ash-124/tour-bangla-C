@@ -78,10 +78,10 @@ const BookingRow = ({ pkg, i, refetch }) => {
           <button
             onClick={()=>navigate(`/dashboard/pay/${_id}`)}
             disabled={status !== 'pending'}
-            className="btn btn-xs btn-success"
+            className="btn btn-xs btn-success text-white"
             title="Pay"
           >
-            <FaCreditCard />
+            <FaCreditCard className='text-white' />
           </button>
 
           {/* Cancel */}
