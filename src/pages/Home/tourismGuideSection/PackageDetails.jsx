@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../../../Hooks/useAuth';
@@ -77,109 +77,117 @@ const PackageDetails = () => {
                 </div>
             </div>
 
-            {/* About The Tour Section */}
-            <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">About The Tour</h2>
-                <p>{packageData?.description}</p>
-            </div>
+             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                {/* LEFT CONTENT */}
+                <div className="lg:col-span-2 space-y-8">
+                    {/* Title */}
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-900">
+                            {packageData.name}
+                        </h1>
+                        <p className="text-gray-500 mt-1">{packageData.duration}</p>
+                    </div>
 
-            {/* Tour Plan Section */}
-            <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">Tour Plan</h2>
-                <ul className="list-disc pl-6">
-                    {packageData.itinerary && packageData?.itinerary.map((item, index) => (
-                        <li key={index} className="mb-2">
-                            <strong> {item} </strong>
+                    {/* About */}
+                    <div>
+                        <h2 className="text-xl font-semibold mb-3">About the Tour</h2>
+                        <p className="text-gray-600 leading-relaxed">
+                            {packageData.description}
+                        </p>
+                    </div>
 
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                    {/* Itinerary */}
+                    <div>
+                        <h2 className="text-xl font-semibold mb-3">Tour Plan</h2>
+                        <ul className="space-y-2">
+                            {packageData.itinerary?.map((item, idx) => (
+                                <li
+                                    key={idx}
+                                    className="bg-gray-50 border rounded-lg p-3 text-gray-700"
+                                >
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
 
-            {/* Tour Guides Section */}
-            <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">Tour Guides</h2>
-                <div className="grid grid-cols-3 gap-4">
-                    {tourGuides?.map((guide) => (
-                        <div
-                            key={guide._id}
-                            className="cursor-pointer border p-4 rounded-lg text-center"
-                            onClick={() => navigate(`/guide-profile/${guide.email}`)}
-                        >
-                            <img
-                                src={guide.photoURL}
-                                alt={guide.name}
-                                className="w-20 h-20 mx-auto rounded-full mb-2"
-                            />
-                            <p>{guide.name}</p>
+                    {/* Guides */}
+                    <div>
+                        <h2 className="text-xl font-semibold mb-3">Available Guides</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                            {tourGuides?.map((guide) => (
+                                <div
+                                    key={guide._id}
+                                    onClick={() =>
+                                        navigate(`/guide-profile/${guide.email}`)
+                                    }
+                                    className="cursor-pointer bg-white border rounded-xl p-4 text-center hover:shadow-md transition"
+                                >
+                                    <img
+                                        src={guide.photoURL}
+                                        alt={guide.name}
+                                        className="w-16 h-16 mx-auto rounded-full mb-2 object-cover"
+                                    />
+                                    <p className="font-medium">{guide.name}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
+                    </div>
                 </div>
-            </div>
 
-            {/* Booking Form */}
-            <div className="mb-8">
-                <h2 className="text-2xl font-bold mb-4">Book Your Tour</h2>
-                <form className="grid grid-cols-1 gap-4 max-w-lg">
-                    <input
-                        type="text"
-                        value={packageData.name}
-                        readOnly
-                        className="p-2 border rounded-lg"
-                    />
-                    <input
-                        type="text"
-                        value={user?.displayName || "Guest"}
-                        readOnly
-                        className="p-2 border rounded-lg"
-                    />
-                    <input
-                        type="email"
-                        value={user?.email || "Not Available"}
-                        readOnly
-                        className="p-2 border rounded-lg"
-                    />
-                    <input
-                        type="text"
-                        value={user?.photoURL || "No Image"}
-                        readOnly
-                        className="p-2 border rounded-lg"
-                    />
-                    <input
-                        type="number"
-                        value={packageData.price}
-                        readOnly
-                        className="p-2 border rounded-lg"
-                    />
-                    <DatePicker
-                        selected={tourDate}
-                        onChange={(date) => setTourDate(date)}
-                        placeholderText="Select Tour Date"
-                        className="p-2 border rounded-lg w-full"
-                    />
+                {/* RIGHT BOOKING CARD */}
+                <div className="lg:sticky lg:top-24 h-fit">
+                    <div className="bg-white border rounded-2xl shadow-lg p-6 space-y-4">
+                        <div className="text-center">
+                            <p className="text-gray-500">Price</p>
+                            <p className="text-3xl font-bold text-orange-500">
+                                ৳{packageData.price}
+                            </p>
+                        </div>
 
-                    <select
-                        value={selectedGuide?.name || ''}
-                        onChange={handleSelectedTourGuide}
-                        className="p-2 border rounded-lg"
-                    >
-                        <option value="" disabled>
-                            Select Tour Guide
-                        </option>
-                        {tourGuides?.map((guide) => (
-                            <option key={guide._id} data-email={guide?.email} value={guide.name}>
-                                {guide.name}
+                        <div>
+                            <DatePicker
+                                selected={tourDate}
+                                onChange={(date) => setTourDate(date)}
+                                minDate={new Date()}
+                                placeholderText="Select tour date"
+                                className="input input-bordered w-full"
+                            />
+
+
+                        </div>
+                        <select
+                            className="select select-bordered w-full"
+                            defaultValue=""
+                            onChange={(e) =>
+                                setSelectedGuide({
+                                    name: e.target.value,
+                                    email: e.target.selectedOptions[0].dataset.email,
+                                })
+                            }
+                        >
+                            <option disabled value="">
+                                Select Tour Guide
                             </option>
-                        ))}
-                    </select>
-                    <button
-                        type="button"
-                        onClick={handleBooking}
-                        className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
-                    >
-                        Book Now
-                    </button>
-                </form>
+                            {tourGuides?.map((guide) => (
+                                <option
+                                    key={guide._id}
+                                    value={guide.name}
+                                    data-email={guide.email}
+                                >
+                                    {guide.name}
+                                </option>
+                            ))}
+                        </select>
+
+                        <button
+                            onClick={handleBooking}
+                            className="btn btn-primary w-full"
+                        >
+                            Book Now
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

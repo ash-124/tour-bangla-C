@@ -22,7 +22,7 @@ const Navbar = () => {
 
 
     return (
-        <div className="navbar fixed top-0 z-50 bg-blue-950/60 backdrop-blur-md backdrop-saturate-150 border-b border-white/10 text-white">
+        <div className="navbar fixed top-0 z-50 bg-blue-950/60 backdrop-blur-md backdrop-saturate-150 border-b border-white/10 text-white px-4  md:px-10">
 
             {/* Navbar Start */}
             <div className="navbar-start">

@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 
 
 const Dashboard = () => {
-    // const [cart] = useCart();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const navigate = useNavigate();
@@ -15,8 +14,8 @@ const Dashboard = () => {
     useEffect(() => {
         if (pathname === '/dashboard') {
             if (isTourist) navigate('/dashboard/my-bookings');
-            if (isAdmin) navigate('/dashboard/users');
-            if (isTourGuide) navigate('/dashboard/profile')
+            if (isAdmin) navigate('/dashboard/profile');
+            if (isTourGuide) navigate('/dashboard/assigned-tours')
         }
     }, [pathname, isTourist, isAdmin, isTourGuide])
     return (
@@ -98,7 +97,7 @@ const Dashboard = () => {
             </div>
 
             {/* Dashboard Content */}
-            <div className="flex-1 p-4 ">
+            <div className="flex-1 p-2 md:p-4 ">
                 <Outlet />
             </div>
 

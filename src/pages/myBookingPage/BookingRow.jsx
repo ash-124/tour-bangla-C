@@ -41,7 +41,7 @@ const BookingRow = ({ pkg, i, refetch }) => {
 
 
   return (
-    <tr>
+    <tr className='text-xs md:text-sm'>
       <th>{i + 1}</th>
 
       <td className="whitespace-normal ">
@@ -68,12 +68,12 @@ const BookingRow = ({ pkg, i, refetch }) => {
               : "badge-success"
           }`}
         >
-          {status}
+          {status=='in-review'?status.split('-')[1]:status}
         </span>
       </td>
 
       <td>
-        <div className="flex flex-wrap items-center gap-1">
+        <div className="flex  items-center gap-1">
           {/* Pay */}
           <button
             onClick={()=>navigate(`/dashboard/pay/${_id}`)}

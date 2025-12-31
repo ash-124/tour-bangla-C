@@ -64,77 +64,89 @@ const Login = () => {
       });
       navigate(from, { replace: true });
     } catch (err) {
-      toast.error("Google login failed");
+      if (err.response?.status === 409) {
+        // User already exists, just log them in
+        Swal.fire({
+          icon: "success",
+          title: "Welcome back!",
+          showConfirmButton: false,
+          timer: 1200,
+        });
+        navigate(from, { replace: true });
+      } else {
+        toast.error("Google login failed");
+        console.error(err);
+      }
     }
-  };
+};
 
-  return (
-    <>
-      <Helmet>
-        <title>Tour Bangla | Login</title>
-      </Helmet>
+return (
+  <>
+    <Helmet>
+      <title>Tour Bangla | Login</title>
+    </Helmet>
 
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Login</h2>
-          <p className="text-gray-500 mb-6">Access your account to manage bookings</p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+        <h2 className="text-3xl font-bold text-gray-900 mb-2">Login</h2>
+        <p className="text-gray-500 mb-6">Access your account to manage bookings</p>
 
-          <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleLogin} className="space-y-4">
+          <input
+            name="email"
+            type="email"
+            placeholder="Email"
+            className="input input-bordered w-full"
+            required
+          />
+
+          <input
+            name="password"
+            type="password"
+            placeholder="Password"
+            className="input input-bordered w-full"
+            required
+          />
+
+          <div className="space-y-2">
+            <LoadCanvasTemplate />
             <input
-              name="email"
-              type="email"
-              placeholder="Email"
+              type="text"
+              placeholder="Enter captcha"
+              value={captchaInput}
+              onChange={(e) => setCaptchaInput(e.target.value)}
               className="input input-bordered w-full"
-              required
             />
-
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              className="input input-bordered w-full"
-              required
-            />
-
-            <div className="space-y-2">
-              <LoadCanvasTemplate />
-              <input
-                type="text"
-                placeholder="Enter captcha"
-                value={captchaInput}
-                onChange={(e) => setCaptchaInput(e.target.value)}
-                className="input input-bordered w-full"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={disabled}
-              className={`btn w-full ${disabled ? 'bg-gray-400 cursor-not-allowed' : 'btn-primary'}`}
-            >
-              Login
-            </button>
-          </form>
-
-          <div className="divider">OR</div>
+          </div>
 
           <button
-            onClick={handleGoogleLogin}
-            className="btn btn-outline w-full flex items-center justify-center gap-2"
+            type="submit"
+            disabled={disabled}
+            className={`btn w-full ${disabled ? 'bg-gray-400 cursor-not-allowed' : 'btn-primary'}`}
           >
-            <FaGoogle /> Continue with Google
+            Login
           </button>
+        </form>
 
-          <p className="text-sm text-center text-gray-500 mt-4">
-            New here?{" "}
-            <Link to="/signup" className="text-blue-600 font-semibold">
-              Sign Up
-            </Link>
-          </p>
-        </div>
+        <div className="divider">OR</div>
+
+        <button
+          onClick={handleGoogleLogin}
+          className="btn btn-outline w-full flex items-center justify-center gap-2"
+        >
+          <FaGoogle /> Continue with Google
+        </button>
+
+        <p className="text-sm text-center text-gray-500 mt-4">
+          New here?{" "}
+          <Link to="/signup" className="text-blue-600 font-semibold">
+            Sign Up
+          </Link>
+        </p>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 };
 
 export default Login;
