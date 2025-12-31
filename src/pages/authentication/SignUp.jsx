@@ -3,161 +3,115 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import Swal from "sweetalert2";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
-import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
 
-
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 
 const SignUp = () => {
+  const { register, handleSubmit, reset, formState: { errors } } = useForm();
+  const { createUser, updateUserProfile, googleLogin } = useAuth();
+  const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    const auth = useAuth();
-    const axiosPublic = useAxiosPublic();
-    const navigate = useNavigate();
-    const { createUser, updateUserProfile, googleLogin } = auth;
-    const onSubmit = data => {
-        createUser(data.email, data.password)
-            .then(result => {
-                updateUserProfile(data.name, data.photoURL)
-                    .then(async () => {
-                        const userInfo = {
-                            name: data.name,
-                            email: data.email,
-                            photoURL: data.photoURL,
-                            role:'tourist'
-                        }
-                        await axiosPublic.post('/users', userInfo)
-                            .then(res => {
-                                console.log(res)
-                                if (res.data?.insertedId) {
-                                    reset();
-                                    Swal.fire({
-                                        position: 'top-end',
-                                        icon: 'success',
-                                        title: 'User created successfully.',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    });
-                                    navigate('/');
-                                }
-                            })
-
-
-                    })
-                    .catch(error => {
-                        toast.error(error.message)
-                    })
-            })
-    };
-
-    const handleGoogleLogin = () => {
-        try {
-            googleLogin()
-                .then(async res => {
-
-                    const userInfo = {
-                        name: res.user?.displayName,
-                        email: res.user?.email,
-                        photoURL: res.user?.photoURL,
-                        role:'tourist',
-                    }
-
-                    await axiosPublic.post('/users', userInfo)
-
-                        .then(res => {
-                            if (res.data?.insertedId) {
-                                reset();
-                                Swal.fire({
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: 'User created successfully.',
-                                    showConfirmButton: false,
-                                    timer: 1500
-                                });
-                                navigate('/');
-                            }
-                        }).catch(err=>{
-                            console.log(err);
-                            toast.error(err.message)
-                        })
-                })
-
-
-        } catch (error) {
-            console.log(error);
-            toast.error(error.message)
-        }
+  const onSubmit = async (data) => {
+    try {
+      await createUser(data.email, data.password);
+      await updateUserProfile(data.name, data.photoURL);
+      await axiosPublic.post("/users", { ...data, role: "tourist" });
+      reset();
+      Swal.fire({
+        icon: "success",
+        title: "Account created!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message);
     }
+  };
 
-    return (
-        <>
-            <Helmet>
-                <title>Tour Bangla | Sign Up</title>
-            </Helmet>
-            <div className="hero min-h-screen bg-base-200">
-                <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center lg:text-left">
-                        <h1 className="text-5xl font-bold">Sign up now!</h1>
-                        <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-                    </div>
-                    <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-                        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Name</span>
-                                </label>
-                                <input type="text"  {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" />
-                                {errors.name && <span className="text-red-600">Name is required</span>}
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Photo URL</span>
-                                </label>
-                                <input type="text"  {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered" />
-                                {errors.photoURL && <span className="text-red-600">Photo URL is required</span>}
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Email</span>
-                                </label>
-                                <input type="email"  {...register("email", { required: true })} name="email" placeholder="email" className="input input-bordered" />
-                                {errors.email && <span className="text-red-600">Email is required</span>}
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Password</span>
-                                </label>
-                                <input type="password"  {...register("password", {
-                                    required: true,
-                                    minLength: 6,
-                                    maxLength: 20,
-                                    pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/
-                                })} placeholder="password" className="input input-bordered" />
-                                {errors.password?.type === 'required' && <p className="text-red-600">Password is required</p>}
-                                {errors.password?.type === 'minLength' && <p className="text-red-600">Password must be 6 characters</p>}
-                                {errors.password?.type === 'maxLength' && <p className="text-red-600">Password must be less than 20 characters</p>}
-                                {errors.password?.type === 'pattern' && <p className="text-red-600">Password must have one Uppercase one lower case, one number and one special character.</p>}
-                                <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                                </label>
-                            </div>
-                            <div className="form-control mt-6">
-                                <input className="btn btn-primary" type="submit" value="Sign Up" />
-                            </div>
-                        </form>
-                        <p className=" text-center"><small>Already have an account <Link to="/login">Login</Link></small></p>
-                        {/* social logins */}
-                        <div className="p-8">
-                            <button onClick={handleGoogleLogin} className="btn btn-outline btn-success">
-                                <FaGoogle className="mr-2" />  Google
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </>
-    );
+  const handleGoogleLogin = async () => {
+    try {
+      const res = await googleLogin();
+      await axiosPublic.post("/users", {
+        name: res.user.displayName,
+        email: res.user.email,
+        photoURL: res.user.photoURL,
+        role: "tourist",
+      });
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
+
+  return (
+    <>
+      <Helmet>
+        <title>Tour Bangla | Sign Up</title>
+      </Helmet>
+
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+          <h2 className="text-3xl font-bold text-gray-900 mb-2">Sign Up</h2>
+          <p className="text-gray-500 mb-6">Create your account to start exploring</p>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <input
+              {...register("name", { required: true })}
+              placeholder="Full Name"
+              className="input input-bordered w-full"
+            />
+            {errors.name && <p className="text-red-600 text-sm">Name is required</p>}
+
+            <input
+              {...register("photoURL", { required: true })}
+              placeholder="Photo URL"
+              className="input input-bordered w-full"
+            />
+            {errors.photoURL && <p className="text-red-600 text-sm">Photo URL is required</p>}
+
+            <input
+              {...register("email", { required: true })}
+              placeholder="Email"
+              className="input input-bordered w-full"
+            />
+            {errors.email && <p className="text-red-600 text-sm">Email is required</p>}
+
+            <input
+              type="password"
+              {...register("password", { required: true, minLength: 6 })}
+              placeholder="Password"
+              className="input input-bordered w-full"
+            />
+            {errors.password && <p className="text-red-600 text-sm">Password must be at least 6 characters</p>}
+
+            <button type="submit" className="btn btn-primary w-full">
+              Sign Up
+            </button>
+          </form>
+
+          <div className="divider">OR</div>
+
+          <button
+            onClick={handleGoogleLogin}
+            className="btn btn-outline w-full flex items-center justify-center gap-2"
+          >
+            <FaGoogle /> Continue with Google
+          </button>
+
+          <p className="text-sm text-center text-gray-500 mt-4">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-600 font-semibold">
+              Login
+            </Link>
+          </p>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default SignUp;

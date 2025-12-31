@@ -34,7 +34,7 @@ const Banner = () => {
         {/* Search Form */}
         <form
           onSubmit={handleSubmit}
-          className="bg-white text-[#0F172A] p-3 md:p-4 rounded-xl shadow-lg flex flex-col md:flex-row gap-3 md:gap-4 w-full max-w-4xl"
+          className="bg-blue-950/60 backdrop-blur-md backdrop-saturate-150 text-[#0F172A] p-3 md:p-4 rounded-xl shadow-lg flex flex-col md:flex-row gap-3 md:gap-4 w-full max-w-4xl"
         >
           {/* Destination */}
           <input
@@ -49,7 +49,7 @@ const Banner = () => {
           />
 
           {/* Price Range */}
-          <div className="flex  gap-2 ">
+          <div className="flex flex-col md:flex-row  gap-1 ">
             <input
               type="number"
               name="minPrice"

@@ -74,7 +74,7 @@ const Dashboard = () => {
                         <>
                             <li><NavLink to="/dashboard/profile"><FaHome /> Profile</NavLink></li>
                             <li><NavLink to="/dashboard/assigned-tours"><FaUtensils /> My Assigned Tours</NavLink></li>
-                            <li><NavLink to="/dashboard/users"><FaList /> Stories</NavLink></li>
+                            <li><NavLink to="/dashboard/manage-stories"><FaList /> Manage Stories</NavLink></li>
                             <li><NavLink to="/dashboard/add-story"><FaBook /> Add Story</NavLink></li>
                         </>
                     )}

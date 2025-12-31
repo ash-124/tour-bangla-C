@@ -25,16 +25,16 @@ const ReviewCardSwiper = ({ reviews }) => {
                     disableOnInteraction: false,
                 }}
                 modules={[Pagination, Autoplay, Navigation,]}
-                className="mySwiper w-[400px] "
+                className="mySwiper w-[300px] md:w-[400px] "
                 
                 navigation={true}
 
 
             >
                 {reviews.map(review => <SwiperSlide key={review.review}>
-                    <div className='grid grid-cols-5 bg-white text-black gap-3 rounded-xl p-7  ' >
+                    <div className='grid grid-cols-5 justify-center items-center bg-white text-black gap-3 rounded-xl p-7  ' >
                         {/* card img */}
-                        <div className='col-span-2 h-2/3 '>
+                        <div className='col-span-2  '>
                             <img className='object-cover bg-[#F97316] p-1  w-full h-full  '
                                 src={review.image} alt=''
                                 style={{
@@ -45,7 +45,7 @@ const ReviewCardSwiper = ({ reviews }) => {
                         {/* contents */}
                         <div className='col-span-3 flex flex-col justify-between text-sm '>
                             <p className='text-gray-500'>
-                                {review.review.slice(0, 150)}....
+                                {review.review.slice(0, 120)}....
                             </p>
                             <p className='font-bold'>
                                 {review.name}

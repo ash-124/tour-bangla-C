@@ -43,7 +43,7 @@ const AssignedTours = () => {
         })
 
     }
-
+    console.log('[my assigned tours ]', assignedTours)
     const handleStatus = (status) => {
         if (status === 'pending') {
             return "text-yellow-500";

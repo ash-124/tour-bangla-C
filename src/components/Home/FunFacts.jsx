@@ -10,7 +10,7 @@ const FunFacts = () => {
 
   return (
     <section
-      className="relative mt-6  bg-center bg-cover bg-no-repeat text-white"
+      className="relative  bg-center bg-cover bg-no-repeat text-white"
       style={{ backgroundImage: "url('https://i.ibb.co/gMh5VVQZ/ratargul.jpg')" }}
     >
       {/* Overlay */}
